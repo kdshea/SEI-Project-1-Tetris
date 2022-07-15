@@ -7,4 +7,135 @@ body {
   margin: 0;
 }
 
+.container {
+  height: 100vh;
+  width: 75%;
+  margin: 0 auto;
+  padding-top: 60px;
+  display: flex;
+  justify-content: space-around;
+  border: 1px solid black;
+}
 
+.left {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.left > div {
+  border: 1px solid black;
+}
+
+.scoreboard {
+  display: flex;
+  flex-direction: column;
+}
+
+.scoreboard > div {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid black;
+}
+
+.center {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 100%;
+  align-items: center;
+}
+
+.start-screen > div {
+  display: flex;
+  flex-direction: column;
+}
+
+.grid-container {
+  border: 1px solid black;
+  display: flex;
+  flex-wrap: wrap;
+  width: 302px;
+
+}
+
+.grid-cell {
+  width: 30px;
+  height: 30px;
+  border: 1px solid black;
+}
+
+.pause-screen, .start-screen, .end-screen {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+}
+
+.right {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.right > div:first-child{
+  border: 1px solid black;
+}
+
+.next-grid-container {
+  border: 1px solid black
+}
+
+.right > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+button {
+    display: block;
+    font: inherit;
+    font-size: 1.17em;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+    background-color: white;
+    border-radius: 0px;
+    box-shadow: none;
+    border: 1px solid black;
+}
+
+.hidden {
+  display: none;
+}
+
+.i {
+  background-color: #4FAEEB ;
+}
+
+.j {
+  background-color: #081F5C ;
+}
+
+.l {
+  background-color: #F6C343;
+}
+
+.o {
+  background-color: #FEFF55;
+}
+
+.s {
+  background-color: #A0CF64;
+}
+
+.t {
+  background-color: #69349B;
+}
+
+.z {
+  background-color: #EA3423;
+}

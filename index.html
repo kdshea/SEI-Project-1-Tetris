@@ -7,8 +7,80 @@
     <script src="scripts/app.js" charset="utf-8"></script>
   </head>
   <body>
- 
+    <div class="container">
+      <div class="left">
+        <div>
+          <h3>High Scores</h3>
+          <p><span id="high-scores"></span></p>
+        </div>
+        <div class="scoreboard">
+          <div>
+            <h3>Score</h3>
+            <p><span id="current-score"></span></p>
+          </div>
+          <div>
+            <h3>Line</h3>
+            <p><span id="line-count"></span></p>
+          </div>
+        </div>
+      </div>
 
+      <div class="center">
+
+        <div class="hidden start-screen">
+          <h1>Tetris</h1>
+          <div>
+            <h3>Enter your name</h3>
+            <div><input type="text" name="name" id="name"></div>
+          </div>
+        </div>
+
+        <div class="grid-container"></div>
+
+        <div class="hidden pause-screen">
+          <h2>Pause</h2>
+          <div>
+            <div>
+              <button id="resume">Resume</button>
+            </div>
+            <div>
+              <button id="quit">Quit</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="hidden end-screen">
+          <h2>Game Over</h2>
+          <div>
+            <h2>Final Score</h2>
+            <div><span id="new-high-score"></span></div>
+            <div><span id="final-score"></span></div>
+            <div>
+              <button>Play Again</button>
+            </div>
+          </div>
+        </div>
+
+
+
+      </div>
+
+      <div class="right">
+        <div>
+          <h3>Next</h3>
+          <div class="next-grid-container"></div>
+        </div>
+
+        <div>
+          <div>
+            <button id="start">Start</button>
+          </div>
+          <div>
+            <button id="pause">Pause</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
 
 

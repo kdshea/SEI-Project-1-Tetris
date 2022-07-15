@@ -6,7 +6,7 @@
 A grid-based game based on the class arcade game Tetris using JavaScript, HTML and CSS
 
 ## MVP
-* Shapes move down at an interval
+* Pieces move down at an interval
 * User can rotate pieces
 * User can move pieces L and R
 * Pieces stack on bottom of grid
@@ -17,7 +17,7 @@ A grid-based game based on the class arcade game Tetris using JavaScript, HTML a
 * Functional start, pause, resume, and quit buttons
 
 ## Extra Goals
-* Dispaly upcoming piece
+* Display upcoming piece
 * High scores with name and local storage
 * User can drop pieces faster
 * "Ghost" piece to show where it will land
@@ -46,7 +46,7 @@ A grid-based game based on the class arcade game Tetris using JavaScript, HTML a
   * cells occupied by a piece (in play or out of play)
   * cells that are part of piece in-play
   * cells that are stacked and out-of-play
-  * each piece and corresponding color
+  * each type of piece for corresponding color
 
 
 ## Controls
@@ -92,18 +92,20 @@ A grid-based game based on the class arcade game Tetris using JavaScript, HTML a
 ## Rotation Movement
 * During game play, keep track of current reference position by adding interval and L and R movements to it
 * On rotation, remove class from current in play cells and add to new cells using the rotation array values calculated from the current reference point
+* Have an variable for how many rotations from start it has done to calculate which array version to use for the new cells. Number of rotations % 4 = 0 would bring back to the starting position
 
 ## Edge Behavior
 * Don't allow rotations or left or right movements if doing so would require a cell at index % 10 = 0 to go left or a cell at index % 10 = 9 to go right
 * Don't add/remove any classes and don't change the current reference position 
 
 ## Landing 
-* Stop interval if the index of the next cell is betweeen 190 and 199 OR it is has classes occupied and out-of-play
-* Remove class in play from active piece and add class out of play
+* Stop interval if the index of the next cell is betweeen 190 and 199 OR if index of would-be next cell already has classes occupied and out-of-play
+* Clear interval, remove class in play from active piece and add class out of play
 
 ## Clearing a Row
 * If all cells between index % 10 = 0 and index % 10 = 9 of the same row have class occupied, clear the row
-* Remove classes occupied, in-play, and out-of-play from that roww
+* Remove classes occupied, in-play, and out-of-play from that row
+
 
 ## Moving Rows Following a Clear
 * After a row is cleared, add + width to all the occupied cells with an index lower than the lowest index of that row
@@ -134,6 +136,10 @@ A grid-based game based on the class arcade game Tetris using JavaScript, HTML a
 * Clears grid, removing all occupied classes and in-play or out-of-play
 * Reset score and line count
 * Display start div and name input span
+
+## Play Again Button
+* Clear game over screen
+* Back to start screen
 
 ## Name Input and High Score Local Storage
 * On page load, get high score info and display in HTML
