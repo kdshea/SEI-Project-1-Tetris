@@ -16,18 +16,18 @@
         <div class="scoreboard">
           <div>
             <h3>Score</h3>
-            <p><span id="current-score"></span></p>
+            <p><span id="current-score">0</span></p>
           </div>
           <div>
             <h3>Line</h3>
-            <p><span id="line-count"></span></p>
+            <p><span id="line-count">0</span></p>
           </div>
         </div>
       </div>
 
       <div class="center">
 
-        <div class="hidden start-screen">
+        <div class="display-none start-screen">
           <h1>Tetris</h1>
           <div>
             <h3>Enter your name</h3>
@@ -37,19 +37,19 @@
 
         <div class="grid-container"></div>
 
-        <div class="hidden pause-screen">
+        <div class="display-none pause-screen">
           <h2>Pause</h2>
           <div>
             <div>
               <button id="resume">Resume</button>
             </div>
             <div>
-              <button id="quit">Quit</button>
+              <button id="quit" disabled>Quit</button>
             </div>
           </div>
         </div>
 
-        <div class="hidden end-screen">
+        <div class="display-none end-screen">
           <h2>Game Over</h2>
           <div>
             <h2>Final Score</h2>
@@ -66,7 +66,7 @@
       </div>
 
       <div class="right">
-        <div>
+        <div class="hidden">
           <h3>Next</h3>
           <div class="next-grid-container"></div>
         </div>

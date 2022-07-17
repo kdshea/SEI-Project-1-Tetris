@@ -245,17 +245,43 @@ Wrote code for HTML, basic CSS to display flex and adjust size, and wrote Javasc
 
 
 ## Day 3
-Clean up CSS: group together repeating styles, use variables for colors and fonts to make them easier to change later
+x Clean up CSS: group together repeating styles, use variables for colors and fonts to make them easier to change later
 
-Write out variables in JS to target elements
+x Write out variables in JS to target elements
 
-Make arrays in JS for shapes and orientations of pieces
+x Make arrays in JS for shapes and orientations of pieces
 
-Pseudocode for necessary functions
+x Pseudocode for necessary functions
 
-Add data attribute for what row each grid div is in. When # of divs with same row # data AND class occupied reaches 10 the row should clear
+x Add data attribute for what row each grid div is in. 
+When # of divs with same row # data AND class occupied reaches 10 the row should clear
 
 ## Day 4
+
+Write out click events for buttons and keyboard
+
+Order to code functions:
+  Start button
+  Random piece
+  Move piece
+  Fall interval
+
+  Pause button
+  Resume button
+  
+  Landing
+
+  Left
+  Right
+  checkRows
+  Edge check
+
+  High scores
+  quit game
+  End game
+
+  Rotate
+
 
 ## Day 5
 

@@ -2,6 +2,14 @@
   box-sizing: border-box;
 }
 
+:root {
+  --grid-bg-color: black;
+  --main-border-style: 1px solid black;
+  --grid-border-style: 1px solid grey;
+  --game-elemnt-bg-color: white; 
+
+}
+
 body {
   height: 100vh;
   margin: 0;
@@ -9,12 +17,12 @@ body {
 
 .container {
   height: 100vh;
-  width: 75%;
+  width: 675px;
   margin: 0 auto;
   padding-top: 60px;
   display: flex;
   justify-content: space-around;
-  border: 1px solid black;
+  border: var(--main-border-style);
 }
 
 .left {
@@ -24,7 +32,7 @@ body {
 }
 
 .left > div {
-  border: 1px solid black;
+  border: var(--main-border-style);
 }
 
 .scoreboard {
@@ -35,14 +43,14 @@ body {
 .scoreboard > div {
   display: flex;
   flex-direction: column;
-  border: 1px solid black;
+  border: var(--main-border-style);
 }
 
 .center {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  width: 100%;
+  width: 375px;
   align-items: center;
 }
 
@@ -52,17 +60,18 @@ body {
 }
 
 .grid-container {
-  border: 1px solid black;
+  border: var(--main-border-style);
   display: flex;
   flex-wrap: wrap;
   width: 302px;
+  background-color: var(--grid-bg-color);
 
 }
 
 .grid-cell {
   width: 30px;
   height: 30px;
-  border: 1px solid black;
+  border: var(--grid-border-style);
 }
 
 .pause-screen, .start-screen, .end-screen {
@@ -80,11 +89,11 @@ body {
   justify-content: space-between;
 }
 .right > div:first-child{
-  border: 1px solid black;
+  border: var(--main-border-style);
 }
 
 .next-grid-container {
-  border: 1px solid black
+  border: var(--main-border-style);
 }
 
 .right > div {
@@ -102,14 +111,14 @@ button {
     margin-inline-start: 0px;
     margin-inline-end: 0px;
     font-weight: bold;
-    background-color: white;
+    background-color: var(--game-elemnt-bg-color);
     border-radius: 0px;
     box-shadow: none;
-    border: 1px solid black;
+    border: var(--main-border-style);
 }
 
-.hidden {
-  display: none;
+.occupied {
+  border: 2px solid white;
 }
 
 .i {
@@ -138,4 +147,12 @@ button {
 
 .z {
   background-color: #EA3423;
+}
+
+.display-none {
+  display: none;
+}
+
+.hidden {
+  visibility: hidden;
 }
