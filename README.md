@@ -26,68 +26,52 @@ A grid-based game using JavaScript, HTML and CSS based on the classic arcade gam
 
 # Daily Overview
 
-## Day 1:
+# Day 1 Thursday July 14:
 
-* Original wireframe
-Found ome tetris reference photos from classic version
-Researching how to use arrays for shapes and orientations of pieces
-Starting to write out some ideas and pseudocode on how to approach the game
+### The project was introduced and I chose to do a tetris game. I brainstormed and wrote down some initial ideas of what the project goals and challenges will be. 
+
+  * Rough wireframe
+  * Found some tetris reference photos from classic version
+  * Researching how to use arrays for shapes and orientations of pieces
+  * Starting to write out some ideas and pseudocode on how to approach the game
 
 * Defined MVP as:
-shapes move down at an interval
-user can rotate and move L and R
-they stack on bottom of grid
-randomly pick next piece
-full row clears the row, other pieces move down
-reaching top row ends game
+shapes move down at an interval, user can rotate and move L and R, they stack on bottom of grid, randomly pick next piece, full row clears the row and other pieces move down, reaching top row ends game
 
 * Set goals for extras:
-display next piece
-pause button
-high scores
-fast drop
-ghost piece to show where it will land
-speed up 
-rotate buttoms for clockwise and counterclockwise
+display next piece, pause button, high scores with local storage, fast drop, ghost piece to show where it will land, speed up, rotate buttons for clockwise and counterclockwise
 
-### Notes and Ideas from Day 1-
-start button
-pause button
-score span
-high score span
-lines completed span
-small grid to display next piece
-grid for game
+### Misc Notes and Ideas from Day 1-
+* HTML:
+start button, pause button, score span, high score span, lines completed span, small grid to display next piece, grid for game
 
-for each shape, an array of what boxes it occupies at starting position
+* For each shape, an array of what boxes it occupies at starting position
 an array for each rotation (3 more)
-class for each shape with its color
- example for L:
-[2, 0, 0],  
+class for each shape with its color.Example for L:
+`[2, 0, 0],  
 [2, 2, 2],  
-[0, 0, 0];
-Each array has to have a central point it can rotate around
+[0, 0, 0];` Each array has to have a central point it can rotate around
 
-Start position top middle
-add class occupied to each box the shape takes up
-when you hit rotate, classes are reassgined to boxes from the rotation array using the index number current position of the central axis cell
-prevent rotation if shape is on the edge
+* Start position top middle
+  * Add class occupied to each box the shape takes up
+  * When you hit rotate, classes are reassgined to boxes from the rotation array using the index number current position of the central axis cell
+  * Prevent rotation if shape is on the edge
 
-set interval to move the shape + width down every interval
+* Set interval to move the shape + width down every interval
 
-when reaches bottom line, interval stops. those cells keep class occupied
-new piece starts at start position, new interval starts
-when new piece reaches cell below it that already has class occupied, interval stops, shape stays there
-if all cells in a row have class occupied, clear the class from all of them, 
-move everything above that row down + width
+* When reaches bottom line, interval stops. Those cells keep class occupied. New piece starts at start position, new interval starts. When new piece reaches cell below it that already has class occupied, interval stops, shape stays there.
 
-when cells with occupied class are still at top row when interval stops because they reached a cell below that was occupied, game ends
+* If all cells in a row have class occupied, clear the class from all of them and move everything above that row down + width
 
-random function to pick a new piece each time
+* When cells with occupied class are still at top row when interval stops because they reached a cell below that was occupied, game ends
 
-## Day 2: Detailed Plan
+* Random function to pick a new piece each time
 
-# Tetris Plan
+# Day 2 Friday July 15: Detailed Plan
+
+### I took the rough ideas I had from Day One and polished them up and put together a detailed plan. Then, I started coding. I wrote code for HTML, basic CSS to display flex and adjust size, and wrote Javascript to generate divs that will be the game board.
+
+## Tetris Plan
 
 ## Overview and Concept:
 A grid-based game based on the class arcade game Tetris using JavaScript, HTML and CSS
@@ -241,48 +225,61 @@ A grid-based game based on the class arcade game Tetris using JavaScript, HTML a
 * On page load, get high score info and display in HTML
 * On end of game and quit game, check if current score is > high score. Update high score with name and new score vlaue
 
-Wrote code for HTML, basic CSS to display flex and adjust size, and wrote Javascript to make divs
+# Day 3 Sunday July 17
 
+* x Clean up CSS: group together repeating styles, use variables for colors and fonts to make them easier to change later
 
-## Day 3
-x Clean up CSS: group together repeating styles, use variables for colors and fonts to make them easier to change later
+* x Write out variables in JS to target elements
 
-x Write out variables in JS to target elements
+* x Make arrays in JS for shapes and orientations of pieces
 
-x Make arrays in JS for shapes and orientations of pieces
+* x Pseudocode for necessary functions
 
-x Pseudocode for necessary functions
-
-x Add data attribute for what row each grid div is in. 
+* x Add data attribute for what row each grid div is in. 
 When # of divs with same row # data AND class occupied reaches 10 the row should clear
 
-## Day 4
+# Day 4 Monday July 18
 
-Write out click events for buttons and keyboard
+* x Write out click events for buttons and keyboard
 
-Order to code functions:
-  Start button
-  Random piece
-  Move piece
-  Fall interval
-
-  Pause button
-  Resume button
-  
-  Landing
-
-  Left
-  Right
-  checkRows
-  Edge check
-
-  High scores
-  quit game
-  End game
-
-  Rotate
+### Order to code functions:
+* x  Start button
+* x  Random piece
+* x  Move piece
+* x  Fall interval
+* x  Pause button
+* x  Resume button
+* x  Landing
+* x  Left movement
+* x  Right movement
+* x  Down movement
+* x  Quit game
+* x  Edge check
+* x  End game
+*  checkRows (left off here)
 
 
-## Day 5
+# Day 5 Tuesday July 19
 
-## Day 6
+* Check for full rows and clearing them
+* Change score and line count
+* High scores
+* Rotate:
+  * keep track of number of rotations
+  * select array of new rotation
+  * checkEdges
+  * movePiece
+* Speed up fallInterval after clearing rows
+* Work on CSS styling, sounds, graphics
+* Function to rotate counterclockwise
+  * possibly subtract from rotation count to go backwards in rotation arrays?
+* Ghost piece showing where current piece will land
+* Small grid to the right to display the upcoming piece that is not yet in play
+
+# Day 6 Wednesday July 20
+
+# Day 7 Thursday July 21
+
+# Day 8 Friday July 22
+
+### Project Deadline 3pm
