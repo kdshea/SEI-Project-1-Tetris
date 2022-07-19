@@ -261,9 +261,9 @@ When # of divs with same row # data AND class occupied reaches 10 the row should
 
 # Day 5 Tuesday July 19
 
-* Check for full rows and clearing them
-* Change score and line count
-* High scores
+* x Check for full rows and clearing them
+* x Change score and line count
+* x High scores
 * Rotate:
   * keep track of number of rotations
   * select array of new rotation

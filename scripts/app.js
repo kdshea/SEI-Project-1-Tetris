@@ -38,13 +38,14 @@ function init() {
   let currentPiece
   let color
   let position = startPosition
-  let highScore 
+  let tetrisHighScore 
   let rotations
   let name
   let interval
   let fallSpeed = 1000
-  let score
-  let lines
+  let score = 0
+  let lines = 0
+  let rowsToClear = []
 
 
 
@@ -127,13 +128,10 @@ function init() {
   }
 
   function getHighScores() {
-  // Code from whack-a-mole:
-  //   highScore = parseInt(localStorage.getItem('highScore')) || 0;
-  //   console.log('highScore->', highScore)
-  //   high.innerHTML = `${highScore}`
-  // }
+    tetrisHighScore = parseInt(localStorage.getItem('tetrisHighScore')) || 0
+    console.log('highScore->', tetrisHighScore)
+    highScoreDisplay.innerHTML = `${tetrisHighScore}`
   // adjust to get more than one name and high score key - value pair
-  // do this on page load, quit game, and end of game 
   }
 
   function startGame() {
@@ -237,7 +235,6 @@ function init() {
     // reset score and line count inner HTML
     currentScoreDisplay.innerHTML = `${score}`
     lineCount.innerHTML = `${lines}`
-
     // check new high score?
     // update high score inner HTML
   }
@@ -309,10 +306,18 @@ function init() {
     for (let i = 0; i < array.length; i++) {
       cells[array[i]].classList.remove('in-play')
       cells[array[i]].classList.add('out-of-play')
+      // if cell has class out of play and in row 0, game over
     }
     // run checkRows
     checkRows()
 
+    // After landing and clearing rows, if cells hav class out of play and row 0, game over
+    for ( let i = 0; i < cells.length; i++) {
+      if (cells[[i]].classList.contains('out-of-play') && parseInt(cells[[i]].dataset.row) === 0) {
+        endGame()
+        return
+      }
+    }
     // pick random piece
     // reset current position to start position
     // display random piece at start position
@@ -343,9 +348,7 @@ function init() {
     let array = currentPiece
     // remove class occupied/ in play from current position
     for (let i = 0; i < array.length; i++) {
-      cells[array[i]].classList.remove('occupied')
-      cells[array[i]].classList.remove('in-play')
-      cells[array[i]].classList.remove(`${color}`)
+      cells[array[i]].classList.remove('occupied', 'in-play', `${color}`)
     }
     // change current position to + move
     currentPosition = currentPosition + move
@@ -360,15 +363,11 @@ function init() {
   }
 
   function checkRows() {
-  // if 10 cells have same row number && occupied && out of play
-
     // Make an object with keys 0 - 19 and values of 0
-    const rowObj = {}
+    let rowObj = {}
     for (let i = 0; i < 20; i++) {
       rowObj[i] = 0
     }
-    console.log('object of rows->', rowObj)
-
     // Go through each grid cell, and if it is occupied and out of play, add its row number to an array rowCount
     const rowCount = []
     for (let i = 0; i < cells.length; i++) {
@@ -376,48 +375,84 @@ function init() {
         rowCount.push(parseInt(cells[i].dataset.row))
       } 
     }
-    console.log('row count->', rowCount)
-
     // Go through rowCount array and add +1 to the object of rows each time a row appears in it
-
-    //! STUCK HERE
-    // code in this loop isn't executing
-    for (let i = 0; i < rowCount; i++) {
-      console.log('rowCount[i]', rowCount[0])
-      console.log('rowObj[rowCount[i]]', rowObj[rowCount[i]])
+    for (let i = 0; i < rowCount.length; i++) {
       rowObj[rowCount[i]] = rowObj[rowCount[i]] + 1
     }
+    // if a value in rowObj = 10, add that key to array of rows to be cleared
+    const keys = Object.keys(rowObj)
+    keys.forEach((key) => {
+      console.log(`${key}: ${rowObj[key]}`)
+      if (rowObj[key] > 9) {
+        rowsToClear.push(parseInt(key))
+      }
+    })
+    clearRow()
+    rowObj = {}
+  }
 
-    console.log('new object of rows->', rowObj)
-    // if a value in rowObj = 0, clear that row
+  function clearRow() {
+    console.log('rows that = 10->', rowsToClear)
+    let lowestIndex 
+    // Starting at highest row number to be cleared and moving down
+    // So lowest index will be start of smallest row number cleared
+    // Update line count and score for every row cleared
+    for (let i = rowsToClear.length - 1; i >= 0 ; i--) {
+      console.log('row being cleared->', rowsToClear[i])
+      lowestIndex = rowsToClear[i] * 10 - 1
+      console.log('lowest index', lowestIndex)
+      lines = lines + 1
+      lineCount.innerHTML = lines
+      score = score + 100
+      currentScoreDisplay.innerHTML = score
+      const currentRow = rowsToClear[i]
+      for (let cell = 0; cell < cells.length; cell++) {
+        // for all cells that have the current row in their data, remove classes to clear
+        if (parseInt(cells[cell].dataset.row) === currentRow) {
+          cells[cell].classList.remove('in-play', 'out-of-play', 'occupied', 'i', 'j', 'l', 'o', 's', 't', 'z')
+        }
+      }
+    }
+    //  for all index nums lower than lowest in that row, add + width
+    for (let i = lowestIndex; i >= 0 ; i--) {
+      if (cells[i].classList.contains('occupied') && cells[i].classList.contains('out-of-play') ) {
+        // For cells with index lower than the cleared line, if they are occupied and out of play, get the class list
+        // Use shift to remove 'grid-cell from the class list
+        // Remove the classes, shift the cell down 1 width, and add the classes back
+        const classList = cells[i].classList
+        const classListArray = Object.values(classList)
+        classListArray.shift()
+        cells[i].classList.remove(classListArray[0], classListArray[1], classListArray[3])
+        cells[i + width].classList.add(classListArray[0], classListArray[1], classListArray[3])
+      } 
+      // Clear the rows being cleared and the lowest index
+      // Clear the rowObj
+      lowestIndex = 
+      rowsToClear = []
 
-
-    // console.log('row 19 node list->', row19)
-    // const row19Array = [...row19]
-    // console.log('row 19 array->', row19Array)
-    // const occupiedCells = row19Array.filter(div => div.classList.contains('occupied'))
-    // console.log('occupied cells->', occupiedCells)
-  //  clear all 10 classes
-  //  for all index nums lower than lowest in that row, add + width
-  //  increase line count
-  // if cell has class out of play and in row 0, game over
-  //  stop interval
-    // endGame()
+    }
   }
 
   function endGame() {
+    // stop interval
+    clearInterval(interval)
     // display game over screen
     endScreen.classList.remove('display-none')
     // hide grid
     grid.classList.add('display-none')
     // clear grid
-    let array = cells
-    for (let i = 0; i < array.length; i++) {
-      array[i].classList.remove('in-play', 'out-of-play', 'occupied', 'i', 'j', 'l', 'o', 's', 't', 'z')
+    for (let i = 0; i < cells.length; i++) {
+      cells[i].classList.remove('in-play', 'out-of-play', 'occupied', 'i', 'j', 'l', 'o', 's', 't', 'z')
     }
-  // check if score > high score
-  // current score to inner HTML
-  // if new high score, add to inner HTML and save new name and score pair
+    // check if score > high score
+    // if new high score, add to inner HTML and save new name and score pair
+    if (score > tetrisHighScore) {
+      localStorage.setItem('tetrisHighScore', score)
+      getHighScores()
+      finalScoreDisplay.innerHTML = 'New High Score!'
+    }
+    // current score to inner HTML
+    finalScoreDisplay.innerHTML += `${parseInt(score)}`
   }
 
   function handleMovement(event) {
@@ -453,6 +488,7 @@ function init() {
 
 
   //! Events
+  getHighScores()
   createGrid()
 
 
