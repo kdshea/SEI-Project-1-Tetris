@@ -21,6 +21,7 @@ function init() {
   //End Screen Elements
   const endScreen = document.querySelector('.end-screen')
   const finalScoreDisplay = document.querySelector('#final-score')
+  const playAgainButton = document.querySelector('#play-again')
 
   //Right Elements
   // const next grid container?
@@ -31,15 +32,16 @@ function init() {
   const width = 10
   const height = 20
   const cellCount = width * height
-  console.log('Cell count->', cellCount)
   const cells = []
   const startPosition = 3
   let currentPosition
   let currentPiece
+  let currentArrayObject
   let color
   let position = startPosition
   let tetrisHighScore 
-  let rotations
+  let rotations = 0
+  let rotatedPiece = []
   let name
   let interval
   let fallSpeed = 1000
@@ -47,51 +49,64 @@ function init() {
   let lines = 0
   let rowsToClear = []
 
-
-
   // I Arrays
-  const i1 = [position, position + 1, position + 2, position + 3]
-  const i2 = [position + 1, position + width + 1, position + width * 2 + 1, position + width * 3 + 1]
-  const i3 = i1
-  const i4 = i2
+  const iArrays = {
+    1: [position, position + 1, position + 2, position + 3],
+    2: [position + 1, position + width + 1, position + width * 2 + 1, position + width * 3 + 1],
+    3: [position + 3, position + 2, position + 1, position],
+    4: [position + width * 3 + 1, position + width * 2 + 1, position + width + 1, position + 1],
+  }
 
   // J Arrays
-  const j1 = [position, position + width, position + width + 1, position + width + 2, position + width + 3]
-  const j2 = [position + 1, position + 2, position + width + 1, position + width * 2 + 1, position + width * 3 + 1]
-  const j3 =  [position, position + 1, position + 2, position + 3, position + width + 3]
-  const j4 = [position + 1, position + width + 1, position + width * 2 + 1, position + width * 3, position + width * 3 + 1]
+  const jArrays = {
+    1: [position, position + width, position + width + 1, position + width + 2, position + width + 3],
+    2: [position + 1, position, position + width, position + width * 2, position + width * 3],
+    3: [position + width + 3, position + 3, position + 2, position + 1, position],
+    4: [position + width * 3, position + width * 3 + 1, position + width * 2 + 1, position + width + 1, position + 1],
+  }
 
   // L Arrays
-  const l1 = [position + 3, position + width, position + width + 1, position + width + 2, position + width + 3]
-  const l2 = [position + 1, position + width + 1, position + width * 2 + 1, position + width * 3 + 1, position + width * 3 + 2]
-  const l3 = [position, position + 1, position + 2, position + 3, position + width]
-  const l4 = [position, position + 1, position + width + 1, position + width * 2 + 1, position + width * 3 + 1]
+  const lArrays = {
+    1: [position + 3, position + width + 3, position + width + 2, position + width + 1, position + width],
+    2: [position + width * 3 + 1, position + width * 3, position + width * 2, position + width, position],
+    3: [position + width, position, position + 1, position + 2, position + 3],
+    4: [position, position + 1, position + width + 1, position + width * 2 + 1, position + width * 3 + 1],
+  }
 
   // O Arrays
-  const o1 = [position + 1, position + 2, position + width + 1, position + width + 2]
-  const o2 = o1
-  const o3 = o1
-  const o4 = o1
+  const oArrays = {
+    1: [position, position + 1, position + width, position + width + 1],
+    2: [position, position + 1, position + width, position + width + 1],
+    3: [position, position + 1, position + width, position + width + 1],
+    4: [position, position + 1, position + width, position + width + 1],
+  }
 
   // S Arrays
-  const s1 = [position + 1, position + 2, position + width, position + width + 1]
-  const s2 = [position + 1, position + width + 1, position + width + 2, position + width * 2 + 2]
-  const s3 = s1
-  const s4 = s2
+  const sArrays = {
+    1: [position + 2, position + 1, position + width + 1, position + width],
+    2: [position + width * 2 + 1, position + width + 1, position + width, position],
+    3: [position + width, position + width + 1, position + 1, position + 2],
+    4: [position, position + width, position + width + 1, position + width * 2 + 1],
+  }
 
   // T Arrays
-  const t1 = [position + 1,   position + width,   position + width + 1,   position + width + 2]
-  const t2 = [position + 1, position + width + 1, position + width + 2, position + width * 2 + 1]
-  const t3 = [position, position + 1, position + 2, position + width + 1]
-  const t4 = [position + 1, position + width, position + width + 1, position + width * 2 + 1]
+  const tArrays = {
+    1: [position + 1,   position + width,   position + width + 1,   position + width + 2],
+    2: [position + width + 1, position, position + width, position + width * 2],
+    3: [position + width + 1, position + 2, position + 1, position],
+    4: [position + width, position + width * 2 + 1, position + width + 1, position + 1],
+  }
+
 
   // Z Arrays 
-  const z1 = [position, position + 1, position + width + 1, position + width + 2]
-  const z2 = [position + 2, position + width + 1, position + width + 2, position + width * 2 + 1]
-  const z3 = z1
-  const z4 = z2
+  const zArrays = {
+    1: [position, position + 1, position + width + 1, position + width + 2],
+    2: [position + 1, position + width + 1, position + width, position + width * 2],
+    3: [position + width + 2, position + width + 1, position + 1, position],
+    4: [position + width * 2, position + width, position + width + 1, position + 1],
+  }
 
-  const startArrays = [i1, j1, l1, o1, s1, t1, z1]
+  const startArrays = [iArrays['1'], jArrays['1'], lArrays['1'], oArrays['1'], sArrays['1'], tArrays['1'], zArrays['1']]
 
   // ! Executions
 
@@ -119,10 +134,9 @@ function init() {
 
   function createPiece() {
     // takes the array of the piece and current position and adds classes to divs with correspnding index
-    position = currentPosition
+    currentPosition = startPosition
     const array = currentPiece
     for (let i = 0; i < array.length; i++) {
-      console.log(array[i])
       cells[array[i]].classList.add('occupied', 'in-play', `${color}`)
     }
   }
@@ -164,29 +178,35 @@ function init() {
     const randomNum = Math.floor(Math.random() * 7)
     // Use this number to pick from starting position array
     currentPiece = startArrays[randomNum]
-    console.log('current piece array->', currentPiece)
-    // add color class
+    // add color class and current array object
     switch (randomNum) {
       case 0:
         color = 'i'
+        currentArrayObject = iArrays
         break
       case 1:
         color = 'j'
+        currentArrayObject = jArrays
         break
       case 2: 
         color = 'l'
+        currentArrayObject = lArrays
         break
       case 3:
         color = 'o'
+        currentArrayObject = oArrays
         break
       case 4: 
         color = 's'
+        currentArrayObject = sArrays
         break
       case 5:        
         color = 't'
+        currentArrayObject = tArrays
         break
       case 6:
         color = 'z'
+        currentArrayObject = zArrays
         break
     }
   }
@@ -219,9 +239,8 @@ function init() {
     // hide grid
     grid.classList.add('display-none')
     // clear grid
-    let array = cells
-    for (let i = 0; i < array.length; i++) {
-      array[i].classList.remove('in-play', 'out-of-play', 'occupied', 'i', 'j', 'l', 'o', 's', 't', 'z')
+    for (let i = 0; i < cells.length; i++) {
+      cells[i].classList.remove('in-play', 'out-of-play', 'occupied', 'i', 'j', 'l', 'o', 's', 't', 'z')
     }
     // hide pause screen
     pauseScreen.classList.add('display-none')
@@ -239,13 +258,12 @@ function init() {
     // update high score inner HTML
   }
 
-  function edgeCheck(move) {
+  function edgeCheck(move, array) {
   // need to run for each item in array of the shape
   // take arugments of movements (+1, -1, +width etcs)
   // if move returns an index outside of play, return false
   // if move returns index numbers that are already occupied, return false
     let validMove = true
-    let array = currentPiece
     for (let i = 0; i < array.length; i++) {
       if (array[i] % width === 0 && move === -1) {
         validMove = false
@@ -255,9 +273,59 @@ function init() {
         return validMove
       }
     }
-    array = currentPiece.map(item => item + move)
-    for (let i = 0; i <array.length; i++) {
+    array = array.map(item => item + move)
+    for (let i = 0; i < array.length; i++) {
       if (cells[array[i]].classList.contains('occupied') && cells[array[i]].classList.contains('out-of-play')) {
+        validMove = false
+        return validMove
+      } 
+    }
+    return validMove
+  }
+
+  function generateRotatedPiece() {
+  // click Q, check current rotation + 1 array through rotatedEdgeCheck
+  // if rotation is a valid move, rotate()
+
+    // Find orientation based on number of rotations from starting orientation
+    const orientation = (rotations + 1) % 4
+    switch (orientation) {
+      case 0:
+        rotatedPiece = Object.values(currentArrayObject)[0]
+        break
+      case 1:
+        rotatedPiece = Object.values(currentArrayObject)[1]
+        break
+      case 2: 
+        rotatedPiece = Object.values(currentArrayObject)[2]
+        break
+      case 3:
+        rotatedPiece = Object.values(currentArrayObject)[3]
+        break     
+    }
+    // Move rotate array to current position
+    rotatedPiece = rotatedPiece.map(item => (item + currentPosition - startPosition))
+    console.log('rotated piece->', rotatedPiece)
+    if (rotateEdgeCheck() === true) {
+      rotate()
+    }
+  }
+
+  function rotateEdgeCheck() {
+    // ! Change arrays so that on right side edge, even if rotating it won't go over?
+    // Check if currentPiece is at edge, and if rotatedPiece will go over the edge
+    let validMove = true
+    for (let i = 0; i < currentPiece.length; i++) {
+      if (currentPiece[i] % width === 0 && rotatedPiece[i] < currentPiece[i]) {
+        validMove = false
+        return validMove
+      } else if (currentPiece[i] % width === width - 1 && rotatedPiece[i] > currentPiece[i]) {
+        validMove = false
+        return validMove
+      }
+    }
+    for (let i = 0; i < rotatedPiece.length; i++) {
+      if (cells[rotatedPiece[i]].classList.contains('occupied') && cells[rotatedPiece[i]].classList.contains('out-of-play')) {
         validMove = false
         return validMove
       } 
@@ -267,10 +335,26 @@ function init() {
 
 
   function rotate() {
-  // click Q, check current rotation + 1 array through edgeCheck
-  // if true, rotations + 1. update current rotation
-  // movePiece with same starting position but new rotation array
+    // if true, rotations + 1. update current rotation
+    rotations += 1
+    // same starting position but new rotation array
+    // remove classes occupied and in play, add occupied and in play to new position
+    // need to move color class along also
+    position = currentPosition
+    let array = currentPiece
+    // remove class occupied/ in play from current position
+    for (let i = 0; i < array.length; i++) {
+      cells[array[i]].classList.remove('occupied', 'in-play', `${color}`)
+    }
+    // add classes occupied and in play to new position
+    currentPiece = rotatedPiece
+    array = currentPiece
+    for (let i = 0; i < array.length; i++) {
+      console.log(array[i])
+      cells[array[i]].classList.add('occupied', 'in-play', `${color}`)
+    }
   }
+
 
   function landingCheck() {
   // take arguments of position and array
@@ -321,7 +405,6 @@ function init() {
     // pick random piece
     // reset current position to start position
     // display random piece at start position
-    currentPosition = startPosition
     randomPiece()
     createPiece()
     // start interval: 
@@ -351,13 +434,12 @@ function init() {
       cells[array[i]].classList.remove('occupied', 'in-play', `${color}`)
     }
     // change current position to + move
-    currentPosition = currentPosition + move
+    currentPosition += move
     currentPiece = currentPiece.map(item => item + move)
     // add classes occupied and in play to new position
     // position = currentPosition
     array = currentPiece
     for (let i = 0; i < array.length; i++) {
-      console.log(array[i])
       cells[array[i]].classList.add('occupied', 'in-play', `${color}`)
     }
   }
@@ -369,7 +451,7 @@ function init() {
       rowObj[i] = 0
     }
     // Go through each grid cell, and if it is occupied and out of play, add its row number to an array rowCount
-    const rowCount = []
+    let rowCount = []
     for (let i = 0; i < cells.length; i++) {
       if (cells[i].classList.contains('occupied') && cells[i].classList.contains('out-of-play') ) {
         rowCount.push(parseInt(cells[i].dataset.row))
@@ -377,8 +459,10 @@ function init() {
     }
     // Go through rowCount array and add +1 to the object of rows each time a row appears in it
     for (let i = 0; i < rowCount.length; i++) {
-      rowObj[rowCount[i]] = rowObj[rowCount[i]] + 1
+      rowObj[rowCount[i]] += 1
     }
+    console.log('rowObj->', rowObj)
+
     // if a value in rowObj = 10, add that key to array of rows to be cleared
     const keys = Object.keys(rowObj)
     keys.forEach((key) => {
@@ -389,47 +473,45 @@ function init() {
     })
     clearRow()
     rowObj = {}
+    rowCount = []
   }
 
   function clearRow() {
-    console.log('rows that = 10->', rowsToClear)
     let lowestIndex 
     // Starting at highest row number to be cleared and moving down
     // So lowest index will be start of smallest row number cleared
     // Update line count and score for every row cleared
+    const rowsDown = rowsToClear.length
     for (let i = rowsToClear.length - 1; i >= 0 ; i--) {
-      console.log('row being cleared->', rowsToClear[i])
-      lowestIndex = rowsToClear[i] * 10 - 1
-      console.log('lowest index', lowestIndex)
+      lowestIndex = rowsToClear[i] * 10
+      // Update lines and score
       lines = lines + 1
       lineCount.innerHTML = lines
       score = score + 100
       currentScoreDisplay.innerHTML = score
+      // for all cells that have the current row in their data, remove classes to clear
       const currentRow = rowsToClear[i]
       for (let cell = 0; cell < cells.length; cell++) {
-        // for all cells that have the current row in their data, remove classes to clear
         if (parseInt(cells[cell].dataset.row) === currentRow) {
           cells[cell].classList.remove('in-play', 'out-of-play', 'occupied', 'i', 'j', 'l', 'o', 's', 't', 'z')
         }
       }
     }
-    //  for all index nums lower than lowest in that row, add + width
     for (let i = lowestIndex; i >= 0 ; i--) {
       if (cells[i].classList.contains('occupied') && cells[i].classList.contains('out-of-play') ) {
         // For cells with index lower than the cleared line, if they are occupied and out of play, get the class list
-        // Use shift to remove 'grid-cell from the class list
+        // Use shift to remove 'grid-cell' from the class list
         // Remove the classes, shift the cell down 1 width, and add the classes back
         const classList = cells[i].classList
         const classListArray = Object.values(classList)
         classListArray.shift()
-        cells[i].classList.remove(classListArray[0], classListArray[1], classListArray[3])
-        cells[i + width].classList.add(classListArray[0], classListArray[1], classListArray[3])
-      } 
+        cells[i].classList.remove(classListArray[0], classListArray[1], classListArray[2])
+        cells[i + width * rowsDown].classList.add(classListArray[0], classListArray[1], classListArray[2])
+      }
       // Clear the rows being cleared and the lowest index
       // Clear the rowObj
       lowestIndex = 
       rowsToClear = []
-
     }
   }
 
@@ -438,6 +520,8 @@ function init() {
     clearInterval(interval)
     // display game over screen
     endScreen.classList.remove('display-none')
+    // disable pause button
+    pauseButton.disabled = true
     // hide grid
     grid.classList.add('display-none')
     // clear grid
@@ -455,6 +539,20 @@ function init() {
     finalScoreDisplay.innerHTML += `${parseInt(score)}`
   }
 
+  function playAgain() {
+  // hide game over screen
+    endScreen.classList.add('display-none')
+    // reset scores
+    lines = 0
+    score = 0
+    // display start screen
+    startScreen.classList.remove('display-none')
+    // Disable pause button
+    pauseButton.disabled = true
+    // Enable start button
+    startButton.disabled = false
+  }
+
   function handleMovement(event) {
     const keyCode = event.keyCode
     const left = 37
@@ -465,12 +563,12 @@ function init() {
     // Check the keyCode on the event and match with the direction
     if (left === keyCode) {
       console.log('CLICKED LEFT')
-      if (edgeCheck(-1) === true) {
+      if (edgeCheck(-1, currentPiece) === true) {
         movePiece(-1)
       }
     } else if (right === keyCode) {
       console.log('CLICKED RIGHT')
-      if (edgeCheck(1) === true) {
+      if (edgeCheck(1, currentPiece) === true) {
         movePiece(1)
       }
     } else if (down === keyCode) {
@@ -478,13 +576,11 @@ function init() {
       fallInterval()
     } else if (q === keyCode){
       console.log('CLICKED ROTATE')
-      rotate()
+      generateRotatedPiece()
     } else {
       console.log('INVALID KEY')
     }
   }
-
-
 
 
   //! Events
@@ -496,6 +592,7 @@ function init() {
   pauseButton.addEventListener('click', pauseGame)
   resumeButton.addEventListener('click', resumeGame)
   quitButton.addEventListener('click', quitGame)
+  playAgainButton.addEventListener('click', playAgain)
 
   document.addEventListener('keydown', handleMovement)
 }

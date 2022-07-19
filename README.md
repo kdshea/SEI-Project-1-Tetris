@@ -263,20 +263,37 @@ When # of divs with same row # data AND class occupied reaches 10 the row should
 
 * x Check for full rows and clearing them
 * x Change score and line count
-* x High scores
-* Rotate:
-  * keep track of number of rotations
-  * select array of new rotation
-  * checkEdges
-  * movePiece
-* Speed up fallInterval after clearing rows
-* Work on CSS styling, sounds, graphics
-* Function to rotate counterclockwise
-  * possibly subtract from rotation count to go backwards in rotation arrays?
-* Ghost piece showing where current piece will land
-* Small grid to the right to display the upcoming piece that is not yet in play
+* x High scores local storage
+
+* x Rearrange arrays of piece into objects
+
+* x Rotate:
+  * x keep track of number of rotations
+  * x select array of new rotation
+  * x checkEdges
+
+* x Fix bugs in row clearing
+* x If clearing multiple rows, move cells above down the appropriate number of rows
+
 
 # Day 6 Wednesday July 20
+
+* Fix edge behavior for rotations on right side
+
+* Fix bug filling top row where new shape overlaps with previous
+
+* Work on high scores to use input from name span and to have more than 1 name and high score pair stored
+
+* Speed up fallInterval after clearing rows
+
+* Work on CSS styling, sounds, graphics
+
+* Function to rotate counterclockwise
+  * possibly subtract from rotation count to go backwards in rotation arrays?
+
+* Ghost piece showing where current piece will land
+
+* Small grid to the right to display the upcoming piece that is not yet in play
 
 # Day 7 Thursday July 21
 
