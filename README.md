@@ -266,6 +266,7 @@ When # of divs with same row # data AND class occupied reaches 10 the row should
 * x High scores local storage
 
 * x Rearrange arrays of piece into objects
+  * At first, coded arrays to just make the shapes and filled in cells from top to bottom, elft to right. Had to go back in and write them again so that the each cell in the array mapped to the corresponding cell when the shape rotated 90 degress clockwise. 
 
 * x Rotate:
   * x keep track of number of rotations
@@ -278,15 +279,17 @@ When # of divs with same row # data AND class occupied reaches 10 the row should
 
 # Day 6 Wednesday July 20
 
-* Fix edge behavior for rotations on right side
+* x Fix bug filling top row where new shape overlaps with previous
 
-* Fix bug filling top row where new shape overlaps with previous
+* x Speed up fallInterval after clearing rows
 
 * Work on high scores to use input from name span and to have more than 1 name and high score pair stored
 
-* Speed up fallInterval after clearing rows
+* Fix edge behavior for rotations on right side for I, L, T, and S
 
 * Work on CSS styling, sounds, graphics
+
+# Day 7 Thursday July 21
 
 * Function to rotate counterclockwise
   * possibly subtract from rotation count to go backwards in rotation arrays?
@@ -294,8 +297,6 @@ When # of divs with same row # data AND class occupied reaches 10 the row should
 * Ghost piece showing where current piece will land
 
 * Small grid to the right to display the upcoming piece that is not yet in play
-
-# Day 7 Thursday July 21
 
 # Day 8 Friday July 22
 

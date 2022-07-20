@@ -478,10 +478,18 @@ function init() {
 
   function clearRow() {
     let lowestIndex 
+
     // Starting at highest row number to be cleared and moving down
     // So lowest index will be start of smallest row number cleared
     // Update line count and score for every row cleared
     const rowsDown = rowsToClear.length
+
+    if (rowsToClear.length > 0) {
+    // Update fallSpeed
+      fallSpeed -= 100
+      console.log('new fallSpee inside clearRow->', fallSpeed)
+    }
+
     for (let i = rowsToClear.length - 1; i >= 0 ; i--) {
       lowestIndex = rowsToClear[i] * 10
       // Update lines and score
@@ -509,7 +517,7 @@ function init() {
         cells[i + width * rowsDown].classList.add(classListArray[0], classListArray[1], classListArray[2])
       }
       // Clear the rows being cleared and the lowest index
-      // Clear the rowObj
+      // Clear the rowObj 
       lowestIndex = 
       rowsToClear = []
     }
