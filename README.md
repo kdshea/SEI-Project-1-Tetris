@@ -283,13 +283,13 @@ When # of divs with same row # data AND class occupied reaches 10 the row should
 
 * x Speed up fallInterval after clearing rows
 
+* x Work on CSS styling, sounds, graphics
+
+# Day 7 Thursday July 21
+
 * Work on high scores to use input from name span and to have more than 1 name and high score pair stored
 
 * Fix edge behavior for rotations on right side for I, L, T, and S
-
-* Work on CSS styling, sounds, graphics
-
-# Day 7 Thursday July 21
 
 * Function to rotate counterclockwise
   * possibly subtract from rotation count to go backwards in rotation arrays?

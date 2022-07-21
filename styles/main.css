@@ -4,8 +4,8 @@
 
 :root {
   --grid-bg-color: black;
-  --main-border-style: 1px solid black;
-  --grid-border-style: 1px solid grey;
+  --main-border-style: 1px solid #2B2B2B;
+  --grid-border-style: 0.5px solid grey;
   --game-elemnt-bg-color: white; 
 
 }
@@ -13,9 +13,55 @@
 body {
   height: 100vh;
   margin: 0;
+  background-color: #222222;
+  background: repeating-linear-gradient(
+      45deg,
+      #2b2b2b 0%,
+      #2b2b2b 10%,
+      #222222 0%,
+      #222222 50%
+    )
+    0 / 15px 15px;
+    color: white;
+    text-align: center;
 }
 
+h1, h2, h3, button, span {
+  font-family: 'Bungee Outline', sans-serif;
+  color: #fff;
+  font-size: 1.25em;
+  text-shadow:
+      0 0 5px #fff,
+      0 0 8px #fff,
+      0 0 11px #fff,
+      /* 0 0 32px #0fa,
+      0 0 52px #0fa,
+      0 0 72px #0fa,
+      0 0 92px #0fa,
+      0 0 112px #0fa; */
+}
+h1, #game-over {
+  font-size: 5em;
+  text-shadow:
+  0 0 5px #fff,
+  0 0 8px #fff,
+  0 0 11px #fff,
+  0 0 32px #0fa,
+  0 0 52px #0fa,
+  0 0 72px #0fa,
+  0 0 92px #0fa,
+  0 0 112px #0fa;
+}
+
+h3 {
+  width: 125px;
+}
+
+span, #enter-name {
+  font-family: 'Bungee Hairline', sans-serif;
+}
 .container {
+  background-color: #222222;
   height: 100vh;
   width: 675px;
   margin: 0 auto;
@@ -29,6 +75,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  margin-left: 20px;;
 }
 
 .left > div {
@@ -44,6 +91,7 @@ body {
   display: flex;
   flex-direction: column;
   border: var(--main-border-style);
+  margin-bottom: 40px;
 }
 
 .center {
@@ -87,6 +135,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  margin-right: 20px;
 }
 .right > div:first-child{
   border: var(--main-border-style);
@@ -104,25 +153,29 @@ body {
 
 button {
     display: block;
-    font: inherit;
-    font-size: 1.17em;
+    width: 125px;
+    font-family: 'Bungee Outline', sans-serif;
+    font-size: 1.25em;
     margin-block-start: 1em;
     margin-block-end: 1em;
     margin-inline-start: 0px;
     margin-inline-end: 0px;
     font-weight: bold;
-    background-color: var(--game-elemnt-bg-color);
+    background-color: #222222;
     border-radius: 0px;
     box-shadow: none;
     border: var(--main-border-style);
+    padding: 30px 0px;
 }
 
 .occupied {
-  border: 2px solid white;
+  border: 1px solid white;
+  box-shadow: 0px 0px 5px 2px #fff;
 }
 
 .i {
   background-color: #4FAEEB ;
+
 }
 
 .j {
@@ -146,7 +199,7 @@ button {
 }
 
 .z {
-  background-color: #EA3423;
+  background-color: #ff1177;
 }
 
 .display-none {

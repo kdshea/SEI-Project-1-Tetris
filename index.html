@@ -2,6 +2,9 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bungee+Hairline&family=Bungee+Outline&display=block" rel="stylesheet">
     <title>Tetris</title>
     <link rel="stylesheet" href="styles/main.css">
     <script src="scripts/app.js" charset="utf-8"></script>
@@ -10,7 +13,7 @@
     <div class="container">
       <div class="left">
         <div>
-          <h3>High Scores</h3>
+          <h3 >High <br>Scores</h3>
           <p><span id="high-scores"></span></p>
         </div>
         <div class="scoreboard">
@@ -30,7 +33,7 @@
         <div class="start-screen">
           <h1>Tetris</h1>
           <div>
-            <h3>Enter your name</h3>
+            <h3 id="enter-name">Enter your name</h3>
             <div><input type="text" name="name" id="name"></div>
           </div>
         </div>
@@ -38,7 +41,7 @@
         <div class="display-none grid-container"></div>
 
         <div class="display-none pause-screen">
-          <h2>Pause</h2>
+          <h2>Paused</h2>
           <div>
             <div>
               <button id="resume">Resume</button>
@@ -50,13 +53,13 @@
         </div>
 
         <div class="display-none end-screen">
-          <h2>Game Over</h2>
+          <h2 id="game-over">Game Over</h2>
           <div>
-            <h2>Final Score</h2>
+            <h3>Final <br> Score</h3>
             <div><span id="new-high-score"></span></div>
             <div><span id="final-score"></span></div>
             <div>
-              <button id="play-again">Play Again</button>
+              <button id="play-again">Play <br> Again</button>
             </div>
           </div>
         </div>
