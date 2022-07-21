@@ -267,7 +267,7 @@ i {
 .final-score-div {
   border: var(--main-border-style);
   border-radius: 8px;
-  margin-bottom: 60px;
+  margin-bottom: 20px;
   text-align: center;
   width: 175px;
   background-color: rgba( 33, 33, 33, 100%);
@@ -279,6 +279,7 @@ i {
 
 #new-high-score {
   font-size: 1.5em;
+  margin: 0 auto;
 }
 
 button {

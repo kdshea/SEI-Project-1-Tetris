@@ -1,5 +1,4 @@
 function init() {
-
   // ! Elements
   const grid = document.querySelector('.grid-container')
 
@@ -50,10 +49,13 @@ function init() {
   let position = startPosition
   let highScore1
   let nameScore1 = ''
+  let name1 = ''
   let highScore2
   let nameScore2 = ''
+  let name2 = ''
   let highScore3
   let nameScore3 = ''
+  let name3 = ''
   let direction
   let rotations = 0
   let rotatedPiece = []
@@ -179,15 +181,15 @@ function init() {
     const getHighScore1 = localStorage.getItem('highScore1') || ''
     nameScore1 = getHighScore1.split(' ') || ''
     highScore1 = parseInt(nameScore1.pop()) || 0
-    const name1 = nameScore1.join(' ') || ''
+    name1 = nameScore1.join(' ') || ''
     const getHighScore2 = localStorage.getItem('highScore2') || ''
     nameScore2 = getHighScore2.split(' ') || ''
     highScore2 = parseInt(nameScore2.pop()) || 0
-    const name2 = nameScore2.join(' ') || ''
+    name2 = nameScore2.join(' ') || ''
     const getHighScore3 = localStorage.getItem('highScore3') || ''
     nameScore3 = getHighScore3.split(' ') || ''
     highScore3 = parseInt(nameScore3.pop()) || 0
-    const name3 = nameScore3.join(' ') || ''
+    name3 = nameScore3.join(' ') || ''
 
     highScore1Display.innerHTML = `${name1}<br>${highScore1}`
     highScore2Display.innerHTML = `${name2}<br>${highScore2}`
@@ -222,7 +224,6 @@ function init() {
     grid.classList.remove('display-none')
     // take name input and store in variable, clear input
     name = nameInput.value 
-    console.log('name->', name)
     nameInput.value = ''
     // Enable pause button
     pauseButton.disabled = false
@@ -389,7 +390,6 @@ function init() {
     }
     // Move rotate array to current position
     rotatedPiece = rotatedPiece.map(item => (item + currentPosition - startPosition))
-    console.log('rotated piece->', rotatedPiece)
     if (rotateEdgeCheck() === true) {
       rotate()
     }
@@ -400,8 +400,6 @@ function init() {
     // Check if currentPiece is at edge, and if rotatedPiece will go over the edge
     let validMove = true
     for (let i = 0; i < currentPiece.length; i++) {
-      console.log('rotatedPiece[i]', rotatedPiece[i])
-      console.log('currentPiece[i]', currentPiece[i])
       if (currentPiece[i] % width === 0 && (rotatedPiece[i] % width === width - 1 || rotatedPiece[i] % width === width - 2)) {
         validMove = false
         return validMove
@@ -443,8 +441,6 @@ function init() {
 
 
   function landingCheck() {
-  // take arguments of position and array
-  // only for + width movements?
     let landing
     const movedPiece = currentPiece.map(item => item + width)
     const array = movedPiece
@@ -472,7 +468,7 @@ function init() {
     clearInterval(interval)
     // remove class in play from current position and add out of play
     position = currentPosition
-    let array = currentPiece
+    const array = currentPiece
     for (let i = 0; i < array.length; i++) {
       cells[array[i]].classList.remove('in-play')
       cells[array[i]].classList.add('out-of-play')
@@ -547,7 +543,6 @@ function init() {
     for (let i = 0; i < rowCount.length; i++) {
       rowObj[rowCount[i]] += 1
     }
-    console.log('rowObj->', rowObj)
 
     // if a value in rowObj = 10, add that key to array of rows to be cleared
     const keys = Object.keys(rowObj)
@@ -573,7 +568,6 @@ function init() {
     if (rowsToClear.length > 0) {
     // Update fallSpeed
       fallSpeed -= 50
-      console.log('new fallSpee inside clearRow->', fallSpeed)
     }
 
     for (let i = rowsToClear.length - 1; i >= 0 ; i--) {
@@ -623,28 +617,23 @@ function init() {
     for (let i = 0; i < cells.length; i++) {
       cells[i].classList.remove('in-play', 'out-of-play', 'occupied', 'i', 'j', 'l', 'o', 's', 't', 'z')
     }
-    // check if score > high score
-    // if new high score, add to inner HTML and save new name and score pair
-    // if (score > tetrisHighScore) {
-    //   localStorage.setItem(tetrisHighScore, `${name} ${score}`)
-    //   getHighScores()
-    //   finalScoreDisplay.innerHTML = 'New High Score!'
-    // }
     finalScoreDisplay.innerHTML = `${parseInt(score)}`
-    if (score > highScore1) {
-      localStorage.setItem('highScore1', `${name} ${score}`)
-      getHighScores()
-      newHighScoreDisplay.innerHTML += 'New<br>High Score!'
-    } else if (score > highScore2) {
-      localStorage.setItem('highScore2', `${name} ${score}`)
-      getHighScores()
-      newHighScoreDisplay.innerHTML += 'New<br>High Score!'
-    } else if (score > highScore3) {
+    if (score > highScore3 && score <= highScore2) {
       localStorage.setItem('highScore3', `${name} ${score}`)
       getHighScores()
-      newHighScoreDisplay.innerHTML += 'New<br>High Score!'
+      newHighScoreDisplay.innerHTML = 'New<br>High Score!'
+    } else if (score > highScore2 && score <= highScore1) {
+      localStorage.setItem('highScore2', `${name} ${score}`)
+      localStorage.setItem('highScore3', `${name2} ${highScore2}`)
+      getHighScores()
+      newHighScoreDisplay.innerHTML = 'New<br>High Score!'
+    } else if (score > highScore1) {
+      localStorage.setItem('highScore1', `${name} ${score}`)
+      localStorage.setItem('highScore2', `${name1} ${highScore1}`)
+      localStorage.setItem('highScore3', `${name2} ${highScore2}`)
+      getHighScores()
+      newHighScoreDisplay.innerHTML = 'New<br>High Score!'
     }
-    // current score to inner HTML
   }
 
   function playAgain() {
@@ -652,7 +641,10 @@ function init() {
     endScreen.classList.add('display-none')
     // reset scores
     lines = 0
+    lineCount.innerHTML = lines
     score = 0
+    currentScoreDisplay.innerHTML = score
+    newHighScoreDisplay.innerHTML = ''
     // reset fallSpeed
     fallSpeed = 1000
     // display start screen
@@ -677,27 +669,21 @@ function init() {
     const w = 87
     // Check the keyCode on the event and match with the direction
     if (left === keyCode) {
-      console.log('CLICKED LEFT')
       if (edgeCheck(-1, currentPiece) === true) {
         movePiece(-1)
       }
     } else if (right === keyCode) {
-      console.log('CLICKED RIGHT')
       if (edgeCheck(1, currentPiece) === true) {
         movePiece(1)
       }
     } else if (down === keyCode) {
-      console.log('CLICKED DOWN')
       fallInterval()
     } else if (q === keyCode){
-      console.log('CLICKED ROTATE COUNTER CLOCKWISE')
       direction = 'counter-clockwise'
       generateRotatedPiece()
     } else if (w === keyCode) {
       direction = 'clockwise'
       generateRotatedPiece()
-    } else {
-      console.log('INVALID KEY')
     }
   }
 
