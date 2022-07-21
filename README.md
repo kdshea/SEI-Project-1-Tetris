@@ -283,11 +283,16 @@ When # of divs with same row # data AND class occupied reaches 10 the row should
 
 * x Speed up fallInterval after clearing rows
 
-* x Work on CSS styling, sounds, graphics
+* x Work on CSS styling, graphics
 
 # Day 7 Thursday July 21
 
-* Work on high scores to use input from name span and to have more than 1 name and high score pair stored
+* x Finish up CSS
+
+* x Favicon
+
+* x Update HTML for 3 high scores
+* x Change high score function to store name and score in value
 
 * Fix edge behavior for rotations on right side for I, L, T, and S
 

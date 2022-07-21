@@ -3,9 +3,11 @@
   <head>
     <meta charset="utf-8">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bungee+Hairline&family=Bungee+Outline&display=block" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bungee+Hairline&family=Bungee+Outline&display=block" rel="stylesheet">
     <title>Tetris</title>
+    <link rel="icon" type="image/x-icon" href="images/T-Icon.ico">
+    <script src="https://kit.fontawesome.com/1bbba2f5ea.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="styles/main.css">
     <script src="scripts/app.js" charset="utf-8"></script>
   </head>
@@ -14,7 +16,9 @@
       <div class="left">
         <div>
           <h3 >High <br>Scores</h3>
-          <p><span id="high-scores"></span></p>
+          <p><span id="high-score-1"></span></p>
+          <p><span id="high-score-2"></span></p>
+          <p><span id="high-score-3"></span></p>
         </div>
         <div class="scoreboard">
           <div>
@@ -41,7 +45,7 @@
         <div class="display-none grid-container"></div>
 
         <div class="display-none pause-screen">
-          <h2>Paused</h2>
+          <h2 id="paused-message">Paused</h2>
           <div>
             <div>
               <button id="resume">Resume</button>
@@ -52,12 +56,26 @@
           </div>
         </div>
 
-        <div class="display-none end-screen">
-          <h2 id="game-over">Game Over</h2>
+        <div class="display-none info-screen">
+          <h2 id="controls">Controls</h2>
           <div>
+            <div>
+              <p>Some text</p>
+            </div>
+            <div>
+              <button id="close-info">Close</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="display-none end-screen">
+          <h2 id="game-over">Game<br> Over</h2>
+          <div>
+            <div class="final-score-div">
             <h3>Final <br> Score</h3>
             <div><span id="new-high-score"></span></div>
-            <div><span id="final-score"></span></div>
+            <div class="final-score-span"><span id="final-score"></span></div>
+            </div>
             <div>
               <button id="play-again">Play <br> Again</button>
             </div>
@@ -69,11 +87,13 @@
       </div>
 
       <div class="right">
-        <div class="hidden">
+        <div class="">
           <h3>Next</h3>
           <div class="next-grid-container"></div>
         </div>
-
+        <div >
+        <button id="info"><i class="fa-solid fa-circle-question"></i></button>
+        </div>
         <div>
           <div>
             <button id="start">Start</button>

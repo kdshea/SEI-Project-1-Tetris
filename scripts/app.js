@@ -4,14 +4,19 @@ function init() {
   const grid = document.querySelector('.grid-container')
 
   // Left Elements
-  const highScoreDisplay = document.querySelector('#high-scores')
+  const highScore1Display = document.querySelector('#high-score-1')
+  const highScore2Display = document.querySelector('#high-score-2')
+  const highScore3Display = document.querySelector('#high-score-3')
   const currentScoreDisplay = document.querySelector('#current-score')
   const lineCount = document.querySelector('#line-count')
   
   //Start Screen Elements
   const startScreen = document.querySelector('.start-screen')
+  const nameInput = document.querySelector('#name') 
 
-  const nameInput = document.querySelector('#name') // Needs to go inside start button function
+  //Info Screen Elements
+  const infoScreen = document.querySelector('.info-screen')
+  const closeButton = document.querySelector('#close-info')
 
   //Pause Screen Elements
   const pauseScreen = document.querySelector('.pause-screen')
@@ -25,6 +30,8 @@ function init() {
 
   //Right Elements
   // const next grid container?
+  const nextGrid = document.querySelector('.next-grid-container')
+  const infoButton = document.querySelector('#info')
   const startButton = document.querySelector('#start')
   const pauseButton = document.querySelector('#pause')
 
@@ -33,13 +40,20 @@ function init() {
   const height = 20
   const cellCount = width * height
   const cells = []
+  const nextCells = []
   const startPosition = 3
   let currentPosition
   let currentPiece
   let currentArrayObject
   let color
   let position = startPosition
-  let tetrisHighScore 
+  let highScore1
+  let nameScore1 = ''
+  let highScore2
+  let nameScore2 = ''
+  let highScore3
+  let nameScore3 = ''
+  let direction
   let rotations = 0
   let rotatedPiece = []
   let name
@@ -130,6 +144,25 @@ function init() {
       // Take the grid element and append the cell
       grid.appendChild(cell)
     }
+    for (let i = 0; i < 16; i++){
+      // This will loop through a set number of times based on the cellCount
+      // Every loop we are goimg to create a new div element and append it to the grid element above
+      const cell = document.createElement('div')
+      // Add innerText to the cell for development purposes - this will allow us to see the index of each cell
+      // cell.innerText = i
+      // For when we remove the index from the innerText, we will add the index to a data attribute on the element
+      cell.dataset.index = i  
+      // Add row number between 0 and 19 to dataset 
+      const rowNum = (i - (i % 10)) / 10
+      // console.log('row number ->', rowNum)
+      cell.dataset.row = rowNum
+      // Add class grid-cell for styling
+      cell.classList.add('next-grid-cell')
+      // Add the cell element into the cells array
+      nextCells.push(cell)
+      // Take the grid element and append the cell
+      nextGrid.appendChild(cell)
+    }
   }
 
   function createPiece() {
@@ -142,10 +175,47 @@ function init() {
   }
 
   function getHighScores() {
-    tetrisHighScore = parseInt(localStorage.getItem('tetrisHighScore')) || 0
-    console.log('highScore->', tetrisHighScore)
-    highScoreDisplay.innerHTML = `${tetrisHighScore}`
-  // adjust to get more than one name and high score key - value pair
+    const getHighScore1 = localStorage.getItem('highScore1') || ''
+    nameScore1 = getHighScore1.split(' ') || ''
+    highScore1 = parseInt(nameScore1.pop()) || 0
+    const name1 = nameScore1.join(' ') || ''
+    const getHighScore2 = localStorage.getItem('highScore2') || ''
+    nameScore2 = getHighScore2.split(' ') || ''
+    highScore2 = parseInt(nameScore2.pop()) || 0
+    const name2 = nameScore2.join(' ') || ''
+    const getHighScore3 = localStorage.getItem('highScore3') || ''
+    nameScore3 = getHighScore3.split(' ') || ''
+    highScore3 = parseInt(nameScore3.pop()) || 0
+    const name3 = nameScore3.join(' ') || ''
+
+    highScore1Display.innerHTML = `${name1}<br>${highScore1}`
+    highScore2Display.innerHTML = `${name2}<br>${highScore2}`
+    highScore3Display.innerHTML = `${name3}<br>${highScore3}`
+  }
+
+  function getInfo() {
+    if (startButton.disabled === false) {
+      // hide start screen
+      startScreen.classList.add('display-none')
+    } else {
+    // hide pause screen
+      pauseScreen.classList.add('display-none')
+    }
+
+    // display info screen
+    infoScreen.classList.remove('display-none')    
+  }
+
+  function closeInfo() {
+    // hide info screen
+    infoScreen.classList.add('display-none')
+    if (startButton.disabled === true) {
+      //display pause screen
+      pauseScreen.classList.remove('display-none')
+    } else {
+      //display start screen
+      startScreen.classList.remove('display-none')
+    }
   }
 
   function startGame() {
@@ -159,8 +229,13 @@ function init() {
     nameInput.value = ''
     // Enable pause button
     pauseButton.disabled = false
+    pauseButton.classList.remove('disabled')
     // Disable start button
     startButton.disabled = true
+    startButton.classList.add('disabled')
+    // Disable info button
+    infoButton.disabled = true
+    infoButton.classList.add('disabled')
     // pick random piece
     // display random piece at start position
     currentPosition = startPosition
@@ -220,8 +295,13 @@ function init() {
     pauseScreen.classList.remove('display-none')
     // disable start button
     startButton.disabled = true
+    startButton.classList.add('disabled')
     // disable pause button
     pauseButton.disabled = true
+    pauseButton.classList.add('disabled')
+    // enable info button
+    infoButton.disabled = false
+    infoButton.classList.remove('disabled')
   }
 
   function resumeGame() {
@@ -231,6 +311,7 @@ function init() {
     grid.classList.remove('display-none')
     // enable pause button
     pauseButton.disabled = false
+    pauseButton.classList.remove('disabled')
     // start fall interval
     interval = setInterval(fallInterval, fallSpeed)
   }
@@ -248,6 +329,7 @@ function init() {
     startScreen.classList.remove('display-none')
     //enable start button
     startButton.disabled = false
+    startButton.classList.remove('disabled')
     // reset score and line count
     score = 0
     lines = 0
@@ -288,7 +370,12 @@ function init() {
   // if rotation is a valid move, rotate()
 
     // Find orientation based on number of rotations from starting orientation
-    const orientation = (rotations + 1) % 4
+    let orientation
+    if (direction === 'clockwise') {
+      orientation = Math.abs((rotations + 1) % 4)
+    } else if (direction === 'counter-clockwise') {
+      orientation = Math.abs((rotations - 1) % 4)
+    }
     switch (orientation) {
       case 0:
         rotatedPiece = Object.values(currentArrayObject)[0]
@@ -316,13 +403,15 @@ function init() {
     // Check if currentPiece is at edge, and if rotatedPiece will go over the edge
     let validMove = true
     for (let i = 0; i < currentPiece.length; i++) {
+      console.log('rotatedPiece[i]', rotatedPiece[i])
+      console.log('currentPiece[i]', currentPiece[i])
       if (currentPiece[i] % width === 0 && rotatedPiece[i] < currentPiece[i]) {
         validMove = false
         return validMove
-      } else if (currentPiece[i] % width === width - 1 && rotatedPiece[i] > currentPiece[i]) {
+      } else if (currentPiece[i] % width === width - 1 && parseInt(cells[rotatedPiece[i]].dataset.row) === parseInt(cells[currentPiece[i]].dataset.row)){
         validMove = false
         return validMove
-      }
+      } //else if (currentPiece[i] % width === width - 2 && currentPiece[i].classList.contains('i', 'l', 'j'))
     }
     for (let i = 0; i < rotatedPiece.length; i++) {
       if (cells[rotatedPiece[i]].classList.contains('occupied') && cells[rotatedPiece[i]].classList.contains('out-of-play')) {
@@ -486,7 +575,7 @@ function init() {
 
     if (rowsToClear.length > 0) {
     // Update fallSpeed
-      fallSpeed -= 100
+      fallSpeed -= 50
       console.log('new fallSpee inside clearRow->', fallSpeed)
     }
 
@@ -530,6 +619,7 @@ function init() {
     endScreen.classList.remove('display-none')
     // disable pause button
     pauseButton.disabled = true
+    pauseButton.classList.add('disabled')
     // hide grid
     grid.classList.add('display-none')
     // clear grid
@@ -538,13 +628,28 @@ function init() {
     }
     // check if score > high score
     // if new high score, add to inner HTML and save new name and score pair
-    if (score > tetrisHighScore) {
-      localStorage.setItem('tetrisHighScore', score)
+    // if (score > tetrisHighScore) {
+    //   localStorage.setItem(tetrisHighScore, `${name} ${score}`)
+    //   getHighScores()
+    //   finalScoreDisplay.innerHTML = 'New High Score!'
+    // }
+
+    if (score > highScore1) {
+      localStorage.setItem('highScore1', `${name} ${score}`)
       getHighScores()
-      finalScoreDisplay.innerHTML = 'New High Score!'
+      finalScoreDisplay.innerHTML = 'NEW<br>High Score!'
+    } else if (score > highScore2) {
+      localStorage.setItem('highScore2', `${name} ${score}`)
+      getHighScores()
+      finalScoreDisplay.innerHTML = 'NEW<br>High Score!'
+    } else if (score > highScore3) {
+      localStorage.setItem('highScore3', `${name} ${score}`)
+      getHighScores()
+      finalScoreDisplay.innerHTML = 'NEW<br>High Score!'
     }
+
     // current score to inner HTML
-    finalScoreDisplay.innerHTML += `${parseInt(score)}`
+    finalScoreDisplay.innerHTML += `<br>${parseInt(score)}`
   }
 
   function playAgain() {
@@ -553,12 +658,16 @@ function init() {
     // reset scores
     lines = 0
     score = 0
+    // reset fallSpeed
+    fallSpeed = 1000
     // display start screen
     startScreen.classList.remove('display-none')
     // Disable pause button
     pauseButton.disabled = true
+    pauseButton.classList.add('disabled')
     // Enable start button
     startButton.disabled = false
+    startButton.classList.remove('disabled')
   }
 
   function handleMovement(event) {
@@ -567,7 +676,7 @@ function init() {
     const right = 39
     const down = 40
     const q = 81
-
+    const w = 87
     // Check the keyCode on the event and match with the direction
     if (left === keyCode) {
       console.log('CLICKED LEFT')
@@ -583,7 +692,11 @@ function init() {
       console.log('CLICKED DOWN')
       fallInterval()
     } else if (q === keyCode){
-      console.log('CLICKED ROTATE')
+      console.log('CLICKED ROTATE COUNTER CLOCKWISE')
+      direction = 'counter-clockwise'
+      generateRotatedPiece()
+    } else if (w === keyCode) {
+      direction = 'clockwise'
       generateRotatedPiece()
     } else {
       console.log('INVALID KEY')
@@ -595,7 +708,8 @@ function init() {
   getHighScores()
   createGrid()
 
-
+  infoButton.addEventListener('click', getInfo)
+  closeButton.addEventListener('click', closeInfo)
   startButton.addEventListener('click', startGame)
   pauseButton.addEventListener('click', pauseGame)
   resumeButton.addEventListener('click', resumeGame)
