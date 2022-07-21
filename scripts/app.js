@@ -26,6 +26,7 @@ function init() {
   //End Screen Elements
   const endScreen = document.querySelector('.end-screen')
   const finalScoreDisplay = document.querySelector('#final-score')
+  const newHighScoreDisplay = document.querySelector('#new-high-score')
   const playAgainButton = document.querySelector('#play-again')
 
   //Right Elements
@@ -194,14 +195,11 @@ function init() {
   }
 
   function getInfo() {
-    if (startButton.disabled === false) {
-      // hide start screen
-      startScreen.classList.add('display-none')
-    } else {
-    // hide pause screen
-      pauseScreen.classList.add('display-none')
-    }
-
+    // hide start screen
+    startScreen.classList.add('display-none')
+    //disable Start button
+    startButton.disabled = true
+    startButton.classList.add('disabled')
     // display info screen
     infoScreen.classList.remove('display-none')    
   }
@@ -209,13 +207,12 @@ function init() {
   function closeInfo() {
     // hide info screen
     infoScreen.classList.add('display-none')
-    if (startButton.disabled === true) {
-      //display pause screen
-      pauseScreen.classList.remove('display-none')
-    } else {
-      //display start screen
-      startScreen.classList.remove('display-none')
-    }
+    //display start screen
+    startScreen.classList.remove('display-none')
+    // Enable start butto
+    startButton.disabled = false
+    startButton.classList.remove('disabled')
+    
   }
 
   function startGame() {
@@ -299,9 +296,6 @@ function init() {
     // disable pause button
     pauseButton.disabled = true
     pauseButton.classList.add('disabled')
-    // enable info button
-    infoButton.disabled = false
-    infoButton.classList.remove('disabled')
   }
 
   function resumeGame() {
@@ -330,6 +324,9 @@ function init() {
     //enable start button
     startButton.disabled = false
     startButton.classList.remove('disabled')
+    // enable info button
+    infoButton.disabled = false
+    infoButton.classList.remove('disabled')
     // reset score and line count
     score = 0
     lines = 0
@@ -405,13 +402,13 @@ function init() {
     for (let i = 0; i < currentPiece.length; i++) {
       console.log('rotatedPiece[i]', rotatedPiece[i])
       console.log('currentPiece[i]', currentPiece[i])
-      if (currentPiece[i] % width === 0 && rotatedPiece[i] < currentPiece[i]) {
+      if (currentPiece[i] % width === 0 && (rotatedPiece[i] % width === width - 1 || rotatedPiece[i] % width === width - 2)) {
         validMove = false
         return validMove
-      } else if (currentPiece[i] % width === width - 1 && parseInt(cells[rotatedPiece[i]].dataset.row) === parseInt(cells[currentPiece[i]].dataset.row)){
+      } else if ((currentPiece[i] % width >= width - 3)  && (rotatedPiece[i] % width === 0 || rotatedPiece[i] % width === 1)) {
         validMove = false
         return validMove
-      } //else if (currentPiece[i] % width === width - 2 && currentPiece[i].classList.contains('i', 'l', 'j'))
+      }
     }
     for (let i = 0; i < rotatedPiece.length; i++) {
       if (cells[rotatedPiece[i]].classList.contains('occupied') && cells[rotatedPiece[i]].classList.contains('out-of-play')) {
@@ -633,27 +630,25 @@ function init() {
     //   getHighScores()
     //   finalScoreDisplay.innerHTML = 'New High Score!'
     // }
-
+    finalScoreDisplay.innerHTML = `${parseInt(score)}`
     if (score > highScore1) {
       localStorage.setItem('highScore1', `${name} ${score}`)
       getHighScores()
-      finalScoreDisplay.innerHTML = 'NEW<br>High Score!'
+      newHighScoreDisplay.innerHTML += 'New<br>High Score!'
     } else if (score > highScore2) {
       localStorage.setItem('highScore2', `${name} ${score}`)
       getHighScores()
-      finalScoreDisplay.innerHTML = 'NEW<br>High Score!'
+      newHighScoreDisplay.innerHTML += 'New<br>High Score!'
     } else if (score > highScore3) {
       localStorage.setItem('highScore3', `${name} ${score}`)
       getHighScores()
-      finalScoreDisplay.innerHTML = 'NEW<br>High Score!'
+      newHighScoreDisplay.innerHTML += 'New<br>High Score!'
     }
-
     // current score to inner HTML
-    finalScoreDisplay.innerHTML += `<br>${parseInt(score)}`
   }
 
   function playAgain() {
-  // hide game over screen
+    // hide game over screen
     endScreen.classList.add('display-none')
     // reset scores
     lines = 0
@@ -668,6 +663,9 @@ function init() {
     // Enable start button
     startButton.disabled = false
     startButton.classList.remove('disabled')
+    // enable info button
+    infoButton.disabled = false
+    infoButton.classList.remove('disabled')
   }
 
   function handleMovement(event) {

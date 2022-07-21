@@ -292,17 +292,32 @@ When # of divs with same row # data AND class occupied reaches 10 the row should
 * x Favicon
 
 * x Update HTML for 3 high scores
+
 * x Change high score function to store name and score in value
 
-* Fix edge behavior for rotations on right side for I, L, T, and S
+* x Function to rotate counterclockwise
 
-* Function to rotate counterclockwise
-  * possibly subtract from rotation count to go backwards in rotation arrays?
+* x Small grid to the right to display the upcoming piece that is not yet in play
+
+* x Fix edge behavior for rotations on right side for I, L, T, and S
+
+* x Create info screen, info button, close button and edit functions to display and hide it
+
+* x Write information screen
+
+# Day 8 Friday July 22
+* Bugs:
+  * Trouble clearing non-consecutive rows
+  * Sometimes game doesn't end on last row and generates a new piece before ending
+
+### Extra Stuff (If Time Allows)
+* Code to display next piece
 
 * Ghost piece showing where current piece will land
 
-* Small grid to the right to display the upcoming piece that is not yet in play
+* Hover effects for buttons?
 
-# Day 8 Friday July 22
+* Sounds
+
 
 ### Project Deadline 3pm

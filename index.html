@@ -58,9 +58,34 @@
 
         <div class="display-none info-screen">
           <h2 id="controls">Controls</h2>
-          <div>
+          <div class="controls-div">
             <div>
-              <p>Some text</p>
+              <table id="info-text">
+                <tr>
+                  <th></th>
+                  <th></th>
+                </tr>
+                <tr>
+                  <td><i class="fa-solid fa-arrow-left"></i></td>
+                  <td>Left Arrow</td>
+                </tr>
+                <tr>
+                  <td><i class="fa-solid fa-arrow-right"></i></td>
+                  <td>Right Arrow</td>
+                </tr>
+                <tr>
+                  <td><i class="fa-solid fa-arrow-down"></i></td>
+                  <td>Down Arrow</td>
+                </tr>
+                <tr>
+                  <td><i class="fa-solid fa-rotate-right"></i></td>
+                  <td>W Key</td>
+                </tr>
+                <tr>
+                  <td><i class="fa-solid fa-rotate-left"></i></td>
+                  <td>Q Key</td>
+                </tr>
+              </table>
             </div>
             <div>
               <button id="close-info">Close</button>
@@ -73,7 +98,7 @@
           <div>
             <div class="final-score-div">
             <h3>Final <br> Score</h3>
-            <div><span id="new-high-score"></span></div>
+            <p id="new-high-score"></p>
             <div class="final-score-span"><span id="final-score"></span></div>
             </div>
             <div>
@@ -99,7 +124,7 @@
             <button id="start">Start</button>
           </div>
           <div>
-            <button id="pause" disabled>Pause</button>
+            <button id="pause" class="disabled" disabled>Pause</button>
           </div>
         </div>
       </div>
