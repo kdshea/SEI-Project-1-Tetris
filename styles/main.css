@@ -115,8 +115,14 @@ h1 {
   0 0 112px #081F5C;
 }
 
-#start, #pause {
+#start, #pause, #resume, #quit {
+  margin-bottom: 15px;
+  padding: 40px 0;
+}
+
+#resume, #quit {
   margin-bottom: 40px;
+  padding: 40px 0;
 }
 
 h3 {
@@ -326,6 +332,7 @@ button {
     border-radius: 8px;
     padding: 30px 0px;
     box-shadow: 0px 8px 15px white;
+    margin: 5px 0;
 }
 
 #play-again {

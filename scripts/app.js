@@ -37,6 +37,7 @@ function init() {
   //Sound Elements
   const clearRowSound = document.querySelector('#clear-row-sound')
   const gameOverSound = document.querySelector('#game-over-sound')
+  const soundControl = document.querySelector('#sound-control')
 
   // ! Variables
   const width = 10
@@ -45,6 +46,8 @@ function init() {
   const cells = []
   const nextCells = []
   const startPosition = 3
+  clearRowSound.muted = false
+  gameOverSound.muted = false
   let currentPosition
   let currentPiece
   let nextPiece
@@ -212,7 +215,6 @@ function init() {
     nameScore3 = getHighScore3.split(' ') || ''
     highScore3 = parseInt(nameScore3.pop()) || 0
     name3 = nameScore3.join(' ') || ''
-
     highScore1Display.innerHTML = `${name1}<br>${highScore1}`
     highScore2Display.innerHTML = `${name2}<br>${highScore2}`
     highScore3Display.innerHTML = `${name3}<br>${highScore3}`
@@ -233,13 +235,27 @@ function init() {
     infoScreen.classList.add('display-none')
     //display start screen
     startScreen.classList.remove('display-none')
-    // Enable start butto
+    // Enable start button
     startButton.disabled = false
     startButton.classList.remove('disabled')
     
   }
 
+  function toggleSound() {
+    if (clearRowSound.muted === false) {
+      clearRowSound.muted = true
+      gameOverSound.muted = true
+      soundControl.innerHTML = '<i class="fa-solid fa-volume-low"></i>'
+    } else if (clearRowSound.muted === true) {
+      clearRowSound.muted = false
+      gameOverSound.muted = false
+      soundControl.innerHTML = '<i class="fa-solid fa-volume-xmark"></i>'
+    }
+  }
+
   function startGame() {
+    //clear any old interval
+    clearInterval(interval)
     // hide start screen
     startScreen.classList.add('display-none')
     // display grid
@@ -267,6 +283,8 @@ function init() {
   }
 
   function randomPiece () {
+    // clear interval
+    clearInterval(interval)
     if (Boolean(nextArrayObject) === false) {
       // -> need an array of starting position arrays
       position = startPosition
@@ -314,6 +332,8 @@ function init() {
     }
   }
   function randomNextPiece () {
+    //clear interval
+    clearInterval(interval)
     // -> need an array of starting position arrays
     position = startPosition
     // Math random to pick number between 0 and 6
@@ -388,6 +408,8 @@ function init() {
   }
 
   function quitGame() {
+    //clear interval
+    clearInterval(interval)
     // hide grid
     grid.classList.add('display-none')
     // clear grid
@@ -555,6 +577,7 @@ function init() {
     // After landing and clearing rows, if cells hav class out of play and row 0, game over
     for ( let i = 0; i < cells.length; i++) {
       if (cells[[i]].classList.contains('out-of-play') && parseInt(cells[[i]].dataset.row) === 0) {
+        clearInterval(interval)
         endGame()
         return
       }
@@ -569,7 +592,8 @@ function init() {
   }
 
   function fallInterval() {
-  // check landing
+    // check landing
+    console.log('interval still going')
     landingCheck()
     if (landingCheck() === false) {
       movePiece(width)
@@ -580,11 +604,16 @@ function init() {
   }
   
   function hardDrop() {
-    while (dropping === true) {
+    if (endScreen.classList.contains('display-none')){
       clearInterval(interval)
-      fallInterval()
+      while (dropping === true) {
+        fallInterval()
+      }
+      dropping = true
     }
-    dropping = true
+    if (!endScreen.classList.contains('display-none')){
+      dropping = false
+    }
   }
 
   function movePiece(move) {
@@ -658,9 +687,11 @@ function init() {
       score = score + 100
       currentScoreDisplay.innerHTML = score
       // Play sound
-      clearRowSound.pause()
-      clearRowSound.currentTime = 0
-      clearRowSound.play()
+      if (!clearRowSound.muted){
+        clearRowSound.pause()
+        clearRowSound.currentTime = 0
+        clearRowSound.play()
+      }
       // for all cells that have the current row in their data, remove classes to clear
       const currentRow = rowsToClear[i]
       for (let cell = 0; cell < cells.length; cell++) {
@@ -694,9 +725,11 @@ function init() {
     // display game over screen
     endScreen.classList.remove('display-none')
     // Play game over sound
-    gameOverSound.pause()
-    gameOverSound.currentTime = 0
-    gameOverSound.play()
+    if (!clearRowSound.muted) {
+      gameOverSound.pause()
+      gameOverSound.currentTime = 0
+      gameOverSound.play()
+    }
     // disable pause button
     pauseButton.disabled = true
     pauseButton.classList.add('disabled')
@@ -706,6 +739,8 @@ function init() {
     for (let i = 0; i < cells.length; i++) {
       cells[i].classList.remove('in-play', 'out-of-play', 'occupied', 'i', 'j', 'l', 'o', 's', 't', 'z')
     }
+    currentArrayObject = {}
+    currentPiece = []
     // clear next grid and variables
     for (let i = 0; i < nextCells.length; i++) {
       nextCells[i].classList.remove('in-play', 'occupied', 'i', 'j', 'l', 'o', 's', 't', 'z')
@@ -774,7 +809,7 @@ function init() {
       if (edgeCheck(1, currentPiece) === true) {
         movePiece(1)
       }
-    } else if (down === keyCode) {
+    } else if (down === keyCode && startButton.disabled === true && pauseButton.disabled === false) {
       fallInterval()
     } else if (q === keyCode){
       direction = 'counter-clockwise'
@@ -782,13 +817,21 @@ function init() {
     } else if (w === keyCode) {
       direction = 'clockwise'
       generateRotatedPiece()
-    } else if (enter === keyCode && startButton.disabled === false) {
+    } else if (enter === keyCode && startButton.disabled === true && pauseButton.disabled === false) {
       startGame()
-    } else if (space === keyCode && startButton.disabled === true) {
+    } else if (space === keyCode && startButton.disabled === true && pauseButton.disabled === false) {
       hardDrop()
     }
   }
 
+  // Prevent space bar from clicking on buttons and toggling sound on/off
+  function preventSpaceBar(event) {
+    const keyCode = event.keyCode
+    const space = 32
+    if (space === keyCode) {
+      event.preventDefault()
+    }
+  }
 
   //! Events
   getHighScores()
@@ -801,7 +844,10 @@ function init() {
   resumeButton.addEventListener('click', resumeGame)
   quitButton.addEventListener('click', quitGame)
   playAgainButton.addEventListener('click', playAgain)
+  soundControl.addEventListener('click', toggleSound)
 
+  document.addEventListener('keyup', preventSpaceBar)
+  document.addEventListener('keypress', preventSpaceBar)
   document.addEventListener('keydown', handleMovement)
 }
 

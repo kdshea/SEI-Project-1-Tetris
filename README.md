@@ -315,15 +315,28 @@ When # of divs with same row # data AND class occupied reaches 10 the row should
 
 * x Hard drop on spacebar
 
-* x Sounds
+* x Sounds on game over and clear row
+
+* x Buttons to turn sound on and off
 
 * x Code to display next piece
 
-* Ghost piece showing where current piece will land
+* x Prevent default behavior of space bar clicking on buttons
 
 * Hover effects for buttons?
 
-
+* Add more comments/explanations in JS code
 
 
 ### Project Deadline 3pm
+
+
+# Futures Improvments
+
+* Break functions into smaller functions with parameters to reuse blocks of code
+
+* Add variables to CSS for colors, fonts, borders etc.
+
+* CSS transition animation for pieces falling and hard drop
+
+* Ghost piece showing where current piece will land
