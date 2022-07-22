@@ -142,7 +142,7 @@ function init() {
 
   const startArrays = [iArrays['1'], jArrays['1'], lArrays['1'], oArrays['1'], sArrays['1'], tArrays['1'], zArrays['1']]
 
-  // ! Executions
+  // ! Page Load Functions
 
   // Executed on page load to make game grid and next piece display gird
   function createGrid(){
@@ -175,34 +175,6 @@ function init() {
     }
   }
 
-  function createPiece() {
-    // Reset the rotation count back to 0
-    rotations = 0
-    // Takes the array of the piece and current position and adds classes to divs with correspnding index
-    currentPosition = startPosition
-    // If new index numbers already have class occupied and out of play, means the out of play pieces have reached the top row
-    for (let i = 0; i < currentPiece.length; i++) {
-      if (cells[currentPiece[i]].classList.contains('occupied') && cells[currentPiece[i]].classList.contains('out-of-play') ) {
-        clearInterval(interval)
-        endGame()
-        return
-      } else {
-        for (let i = 0; i < currentPiece.length; i++) {
-          cells[currentPiece[i]].classList.add('occupied', 'in-play', `${color}`)
-        }
-      }
-    }
-    // Clears the next piece display grid
-    for (let i = 0; i < nextCells.length; i++) {
-      nextCells[i].classList.remove('in-play', 'occupied', 'i', 'j', 'l', 'o', 's', 't', 'z')
-    }
-    // Takes the array for the upcoming piece and adds classes to display in the smaller grid
-    for (let i = 0; i < nextPiece.length; i++) {
-      nextCells[nextPiece[i]].classList.add('occupied', 'in-play', `${nextColor}`)
-    }
-      
-  }
-
   function getHighScores() {
     // Get string of name and high scores, if none creates an empty string
     const getHighScore1 = localStorage.getItem('highScore1') || ''
@@ -225,6 +197,8 @@ function init() {
     highScore2Display.innerHTML = `${name2}<br>${highScore2}`
     highScore3Display.innerHTML = `${name3}<br>${highScore3}`
   }
+
+// ! Button Functions
 
   function getInfo() {
     // hide start screen
@@ -259,135 +233,6 @@ function init() {
       clearRowSound.muted = false
       gameOverSound.muted = false
       soundControl.innerHTML = '<i class="fa-solid fa-volume-xmark"></i>'
-    }
-  }
-
-  function startGame() {
-    //clear any old interval
-    clearInterval(interval)
-    // hide start screen
-    startScreen.classList.add('display-none')
-    // display game grid
-    grid.classList.remove('display-none')
-    // take name input and store in variable, clear input so its empty if you play again
-    name = nameInput.value 
-    nameInput.value = ''
-    // Enable pause button
-    pauseButton.disabled = false
-    pauseButton.classList.remove('disabled')
-    // Disable start button
-    startButton.disabled = true
-    startButton.classList.add('disabled')
-    // Disable info button
-    infoButton.disabled = true
-    infoButton.classList.add('disabled')
-    // Pick random piece
-    currentPosition = startPosition
-    randomPiece()
-    // display random piece at start position
-    createPiece()
-    // start interval: 
-    interval = setInterval(fallInterval, fallSpeed)
-
-  }
-
-  function randomPiece () {
-    // clear interval
-    clearInterval(interval)
-    // If no next piece has been selected yet (start of game), use math random to pick a current piece
-    if (Boolean(nextArrayObject) === false) {
-      // -> need an array of starting position arrays
-      position = startPosition
-      // Math random to pick number between 0 and 6
-      const randomNum = Math.floor(Math.random() * 7)
-      // Use this number to pick from starting position array
-      currentPiece = startArrays[randomNum]
-      // add color class and current array object
-      switch (randomNum) {
-        case 0:
-          color = 'i'
-          currentArrayObject = iArrays
-          break
-        case 1:
-          color = 'j'
-          currentArrayObject = jArrays
-          break
-        case 2: 
-          color = 'l'
-          currentArrayObject = lArrays
-          break
-        case 3:
-          color = 'o'
-          currentArrayObject = oArrays
-          break
-        case 4: 
-          color = 's'
-          currentArrayObject = sArrays
-          break
-        case 5:        
-          color = 't'
-          currentArrayObject = tArrays
-          break
-        case 6:
-          color = 'z'
-          currentArrayObject = zArrays
-          break
-      }
-      // After picking a piece to play, pick a piece to come next
-      randomNextPiece()
-    } else {
-      // If a next piece has been picked already (while game is ongoing), make that the current piece 
-      currentArrayObject = nextArrayObject
-      currentPiece = nextGridPiece
-      color = nextColor
-      // Pick next piece
-      randomNextPiece()
-    }
-  }
-  function randomNextPiece () {
-    //clear interval
-    clearInterval(interval)
-    // Math random to pick number between 0 and 6
-    const randomNum = Math.floor(Math.random() * 7)
-    // Use this number to pick from starting position array
-    nextGridPiece = startArrays[randomNum]
-    // add color class and next piece array object
-    switch (randomNum) {
-      case 0:
-        nextColor = 'i'
-        nextPiece = [0, 1, 2, 3]
-        nextArrayObject = iArrays
-        break
-      case 1:
-        nextColor = 'j'
-        nextPiece = [0, 4, 5, 6, 7]
-        nextArrayObject = jArrays
-        break
-      case 2: 
-        nextColor = 'l'
-        nextPiece = [3, 7, 6, 5, 4]
-        nextArrayObject = lArrays
-        break
-      case 3:
-        nextColor = 'o'
-        nextPiece = [1, 2, 5, 6]
-        nextArrayObject = oArrays
-        break
-      case 4: 
-        nextColor = 's'
-        nextPiece = [3, 2, 6, 5]
-        nextArrayObject = sArrays
-        break
-      case 5:        
-        nextColor = 't'
-        nextPiece = [2, 5, 6, 7]
-        nextArrayObject = tArrays
-        break
-      case 6:
-        nextColor = 'z'
-        nextPiece = [0, 1, 5, 6]
-        nextArrayObject = zArrays
-        break
     }
   }
 
@@ -453,6 +298,189 @@ function init() {
     // update high score inner HTML
   }
 
+  function playAgain() {
+    // hide game over screen
+    endScreen.classList.add('display-none')
+    // reset scores and displays
+    lines = 0
+    lineCount.innerHTML = lines
+    score = 0
+    currentScoreDisplay.innerHTML = score
+    newHighScoreDisplay.innerHTML = ''
+    // reset fallSpeed
+    fallSpeed = 1000
+    // display start screen
+    startScreen.classList.remove('display-none')
+    // Disable pause button
+    pauseButton.disabled = true
+    pauseButton.classList.add('disabled')
+    // Enable start button
+    startButton.disabled = false
+    startButton.classList.remove('disabled')
+    // enable info button
+    infoButton.disabled = false
+    infoButton.classList.remove('disabled')
+  }
+  
+  function startGame() {
+    //clear any old interval
+    clearInterval(interval)
+    // hide start screen
+    startScreen.classList.add('display-none')
+    // display game grid
+    grid.classList.remove('display-none')
+    // take name input and store in variable, clear input so its empty if you play again
+    name = nameInput.value 
+    nameInput.value = ''
+    // Enable pause button
+    pauseButton.disabled = false
+    pauseButton.classList.remove('disabled')
+    // Disable start button
+    startButton.disabled = true
+    startButton.classList.add('disabled')
+    // Disable info button
+    infoButton.disabled = true
+    infoButton.classList.add('disabled')
+    // Pick random piece
+    currentPosition = startPosition
+    randomPiece()
+    // display random piece at start position
+    createPiece()
+    // start interval: 
+    interval = setInterval(fallInterval, fallSpeed)
+  }
+
+
+// ! Game Play Functions
+
+  function randomPiece () {
+    // clear interval
+    clearInterval(interval)
+    // If no next piece has been selected yet (start of game), use math random to pick a current piece
+    if (Boolean(nextArrayObject) === false) {
+      // -> need an array of starting position arrays
+      position = startPosition
+      // Math random to pick number between 0 and 6
+      const randomNum = Math.floor(Math.random() * 7)
+      // Use this number to pick from starting position array
+      currentPiece = startArrays[randomNum]
+      // add color class and current array object
+      switch (randomNum) {
+        case 0:
+          color = 'i'
+          currentArrayObject = iArrays
+          break
+        case 1:
+          color = 'j'
+          currentArrayObject = jArrays
+          break
+        case 2: 
+          color = 'l'
+          currentArrayObject = lArrays
+          break
+        case 3:
+          color = 'o'
+          currentArrayObject = oArrays
+          break
+        case 4: 
+          color = 's'
+          currentArrayObject = sArrays
+          break
+        case 5:        
+          color = 't'
+          currentArrayObject = tArrays
+          break
+        case 6:
+          color = 'z'
+          currentArrayObject = zArrays
+          break
+      }
+      // After picking a piece to play, pick a piece to come next
+      randomNextPiece()
+    } else {
+      // If a next piece has been picked already (while game is ongoing), make that the current piece 
+      currentArrayObject = nextArrayObject
+      currentPiece = nextGridPiece
+      color = nextColor
+      // Pick next piece
+      randomNextPiece()
+    }
+  }
+
+  function randomNextPiece () {
+    //clear interval
+    clearInterval(interval)
+    // Math random to pick number between 0 and 6
+    const randomNum = Math.floor(Math.random() * 7)
+    // Use this number to pick from starting position array
+    nextGridPiece = startArrays[randomNum]
+    // add color class and next piece array object
+    switch (randomNum) {
+      case 0:
+        nextColor = 'i'
+        nextPiece = [0, 1, 2, 3]
+        nextArrayObject = iArrays
+        break
+      case 1:
+        nextColor = 'j'
+        nextPiece = [0, 4, 5, 6, 7]
+        nextArrayObject = jArrays
+        break
+      case 2: 
+        nextColor = 'l'
+        nextPiece = [3, 7, 6, 5, 4]
+        nextArrayObject = lArrays
+        break
+      case 3:
+        nextColor = 'o'
+        nextPiece = [1, 2, 5, 6]
+        nextArrayObject = oArrays
+        break
+      case 4: 
+        nextColor = 's'
+        nextPiece = [3, 2, 6, 5]
+        nextArrayObject = sArrays
+        break
+      case 5:        
+        nextColor = 't'
+        nextPiece = [2, 5, 6, 7]
+        nextArrayObject = tArrays
+        break
+      case 6:
+        nextColor = 'z'
+        nextPiece = [0, 1, 5, 6]
+        nextArrayObject = zArrays
+        break
+    }
+  }
+
+  function createPiece() {
+    // Reset the rotation count back to 0
+    rotations = 0
+    // Takes the array of the piece and current position and adds classes to divs with correspnding index
+    currentPosition = startPosition
+    // If new index numbers already have class occupied and out of play, means the out of play pieces have reached the top row
+    for (let i = 0; i < currentPiece.length; i++) {
+      if (cells[currentPiece[i]].classList.contains('occupied') && cells[currentPiece[i]].classList.contains('out-of-play') ) {
+        clearInterval(interval)
+        endGame()
+        return
+      } else {
+        for (let i = 0; i < currentPiece.length; i++) {
+          cells[currentPiece[i]].classList.add('occupied', 'in-play', `${color}`)
+        }
+      }
+    }
+    // Clears the next piece display grid
+    for (let i = 0; i < nextCells.length; i++) {
+      nextCells[i].classList.remove('in-play', 'occupied', 'i', 'j', 'l', 'o', 's', 't', 'z')
+    }
+    // Takes the array for the upcoming piece and adds classes to display in the smaller grid
+    for (let i = 0; i < nextPiece.length; i++) {
+      nextCells[nextPiece[i]].classList.add('occupied', 'in-play', `${nextColor}`)
+    }
+  }
+
   function edgeCheck(move, array) {
   // need to run for each item in array of the shape
   // take arugments of movements (+1, -1, +width etcs)
@@ -477,6 +505,8 @@ function init() {
     }
     return validMove
   }
+
+  // ! Rotation Functions
 
   function generateRotatedPiece() {
   // if rotation is a valid move, rotate()
@@ -557,6 +587,19 @@ function init() {
     }
   }
 
+  // ! Vertical Movement Functions
+
+  function fallInterval() {
+    // check landing
+    landingCheck()
+    if (landingCheck() === false) {
+      movePiece(width)
+    } else if (landingCheck() === true) {
+      landing()
+      dropping = false
+    }
+  }
+
   function landingCheck() {
     let landing
     // Check if movedPiece can fall one more width before  changing the currentPiece
@@ -584,7 +627,6 @@ function init() {
     // stop interval 
     clearInterval(interval)
     // remove class in play from current position and add out of play
-    position = currentPosition
     for (let i = 0; i < currentPiece.length; i++) {
       cells[currentPiece[i]].classList.remove('in-play')
       cells[currentPiece[i]].classList.add('out-of-play')
@@ -608,18 +650,24 @@ function init() {
     interval = setInterval(fallInterval, fallSpeed)
   }
 
-  function fallInterval() {
-    // check landing
-    console.log('interval still going')
-    landingCheck()
-    if (landingCheck() === false) {
-      movePiece(width)
-    } else if (landingCheck() === true) {
-      landing()
-      dropping = false
+  function movePiece(move) {
+    // argument is how much the currentPosition will move
+    // remove classes occupied and in play
+    // add occupied and in play to new position
+    // if landing false, update new position and movePiece
+    // remove class occupied/ in play from current position
+    for (let i = 0; i < currentPiece.length; i++) {
+      cells[currentPiece[i]].classList.remove('occupied', 'in-play', `${color}`)
+    }
+    // change current position to + move
+    currentPosition += move
+    currentPiece = currentPiece.map(item => item + move)
+    // add classes occupied and in play to new position
+    for (let i = 0; i < currentPiece.length; i++) {
+      cells[currentPiece[i]].classList.add('occupied', 'in-play', `${color}`)
     }
   }
-  
+
   function hardDrop() {
     if (endScreen.classList.contains('display-none')){
       // Clear interval
@@ -643,23 +691,7 @@ function init() {
     }
   }
 
-  function movePiece(move) {
-    // argument is how much the currentPosition will move
-    // remove classes occupied and in play
-    // add occupied and in play to new position
-    // if landing false, update new position and movePiece
-    // remove class occupied/ in play from current position
-    for (let i = 0; i < currentPiece.length; i++) {
-      cells[currentPiece[i]].classList.remove('occupied', 'in-play', `${color}`)
-    }
-    // change current position to + move
-    currentPosition += move
-    currentPiece = currentPiece.map(item => item + move)
-    // add classes occupied and in play to new position
-    for (let i = 0; i < currentPiece.length; i++) {
-      cells[currentPiece[i]].classList.add('occupied', 'in-play', `${color}`)
-    }
-  }
+  // ! Completed Row Functions
 
   function checkRows() {
     // Make an object with keys 0 - 19 and values of 0
@@ -737,6 +769,8 @@ function init() {
     rowsToClear = []
   }
 
+// ! End Game
+
   function endGame() {
     // stop interval
     clearInterval(interval)
@@ -788,29 +822,7 @@ function init() {
     }
   }
 
-  function playAgain() {
-    // hide game over screen
-    endScreen.classList.add('display-none')
-    // reset scores and displays
-    lines = 0
-    lineCount.innerHTML = lines
-    score = 0
-    currentScoreDisplay.innerHTML = score
-    newHighScoreDisplay.innerHTML = ''
-    // reset fallSpeed
-    fallSpeed = 1000
-    // display start screen
-    startScreen.classList.remove('display-none')
-    // Disable pause button
-    pauseButton.disabled = true
-    pauseButton.classList.add('disabled')
-    // Enable start button
-    startButton.disabled = false
-    startButton.classList.remove('disabled')
-    // enable info button
-    infoButton.disabled = false
-    infoButton.classList.remove('disabled')
-  }
+  // ! Keycode Functions
 
   function handleMovement(event) {
     const keyCode = event.keyCode
@@ -873,8 +885,9 @@ function init() {
   }
 
   //! Events
-  getHighScores()
+
   createGrid()
+  getHighScores()
 
   infoButton.addEventListener('click', getInfo)
   closeButton.addEventListener('click', closeInfo)
