@@ -35,6 +35,7 @@ function init() {
   const pauseButton = document.querySelector('#pause')
 
   //Sound Elements
+  const moveSound = document.querySelector('#move-sound')
   const clearRowSound = document.querySelector('#clear-row-sound')
   const gameOverSound = document.querySelector('#game-over-sound')
   const soundControl = document.querySelector('#sound-control')
@@ -248,10 +249,12 @@ function init() {
   function toggleSound() {
     // Toggle sound on and off, and change innerHTML of sound button to display different icon
     if (clearRowSound.muted === false) {
+      moveSound.muted = true
       clearRowSound.muted = true
       gameOverSound.muted = true
       soundControl.innerHTML = '<i class="fa-solid fa-volume-low"></i>'
     } else if (clearRowSound.muted === true) {
+      moveSound.muted = true
       clearRowSound.muted = false
       gameOverSound.muted = false
       soundControl.innerHTML = '<i class="fa-solid fa-volume-xmark"></i>'
@@ -528,6 +531,12 @@ function init() {
   }
 
   function rotate() {
+    // Play sound
+    if (!moveSound.muted){
+      moveSound.pause()
+      moveSound.currentTime = 0
+      moveSound.play()
+    }
     // if true, rotations + 1. update current rotation
     if (direction === 'clockwise') {
       rotations += 1
@@ -614,6 +623,12 @@ function init() {
     if (endScreen.classList.contains('display-none')){
       // Clear interval
       clearInterval(interval)
+      // play move sound
+      if (!moveSound.muted){
+        moveSound.pause()
+        moveSound.currentTime = 0
+        moveSound.play()
+      }
       while (dropping === true) {
         // Repeat fall interval until piece lands
         fallInterval()
@@ -628,9 +643,9 @@ function init() {
   }
 
   function movePiece(move) {
-  // argument is how mucn the currentPosition will move
-  // remove classes occupied and in play
-  // add occupied and in play to new position
+    // argument is how much the currentPosition will move
+    // remove classes occupied and in play
+    // add occupied and in play to new position
     // if landing false, update new position and movePiece
     // remove class occupied/ in play from current position
     for (let i = 0; i < currentPiece.length; i++) {
@@ -727,7 +742,7 @@ function init() {
     // display game over screen
     endScreen.classList.remove('display-none')
     // Play game over sound
-    if (!clearRowSound.muted) {
+    if (!gameOverSound.muted) {
       gameOverSound.pause()
       gameOverSound.currentTime = 0
       gameOverSound.play()
@@ -808,13 +823,31 @@ function init() {
     // Check the keyCode on the event and match with the direction or action
     if (left === keyCode) {
       if (edgeCheck(-1, currentPiece) === true) {
+      // Play sound
+        if (!moveSound.muted){
+          moveSound.pause()
+          moveSound.currentTime = 0
+          moveSound.play()
+        }
         movePiece(-1)
       }
     } else if (right === keyCode) {
       if (edgeCheck(1, currentPiece) === true) {
+        // Play sound
+        if (!moveSound.muted){
+          moveSound.pause()
+          moveSound.currentTime = 0
+          moveSound.play()
+        }
         movePiece(1)
       }
     } else if (down === keyCode && startButton.disabled === true && pauseButton.disabled === false) {
+      // Play sound
+      if (!moveSound.muted){
+        moveSound.pause()
+        moveSound.currentTime = 0
+        moveSound.play()
+      }
       fallInterval()
     } else if (q === keyCode){
       direction = 'counter-clockwise'
