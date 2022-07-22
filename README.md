@@ -6,7 +6,7 @@ A tetris game using javascript
 # General Assembly SEI Project 1: Tetris
 
 * Link: 
-
+https://kdshea.github.io/SEI-Tetris/
 
 # Overview and Concept:
 
@@ -325,7 +325,7 @@ When # of divs with same row # data AND class occupied reaches 10 the row should
 
 * x Hover and active effects for buttons
 
-* Add more comments/explanations in JS code
+* x Added more comments/explanations in JS code
 
 
 ### Project Deadline 3pm
