@@ -29,11 +29,14 @@ function init() {
   const playAgainButton = document.querySelector('#play-again')
 
   //Right Elements
-  // const next grid container?
   const nextGrid = document.querySelector('.next-grid-container')
   const infoButton = document.querySelector('#info')
   const startButton = document.querySelector('#start')
   const pauseButton = document.querySelector('#pause')
+
+  //Sound Elements
+  const clearRowSound = document.querySelector('#clear-row-sound')
+  const gameOverSound = document.querySelector('#game-over-sound')
 
   // ! Variables
   const width = 10
@@ -44,8 +47,12 @@ function init() {
   const startPosition = 3
   let currentPosition
   let currentPiece
+  let nextPiece
+  let nextGridPiece
   let currentArrayObject
+  let nextArrayObject
   let color
+  let nextColor
   let position = startPosition
   let highScore1
   let nameScore1 = ''
@@ -61,6 +68,7 @@ function init() {
   let rotatedPiece = []
   let name
   let interval
+  let dropping = true
   let fallSpeed = 1000
   let score = 0
   let lines = 0
@@ -138,7 +146,6 @@ function init() {
       cell.dataset.index = i  
       // Add row number between 0 and 19 to dataset 
       const rowNum = (i - (i % 10)) / 10
-      // console.log('row number ->', rowNum)
       cell.dataset.row = rowNum
       // Add class grid-cell for styling
       cell.classList.add('grid-cell')
@@ -147,7 +154,7 @@ function init() {
       // Take the grid element and append the cell
       grid.appendChild(cell)
     }
-    for (let i = 0; i < 16; i++){
+    for (let i = 0; i < 8; i++){
       // This will loop through a set number of times based on the cellCount
       // Every loop we are goimg to create a new div element and append it to the grid element above
       const cell = document.createElement('div')
@@ -156,9 +163,9 @@ function init() {
       // For when we remove the index from the innerText, we will add the index to a data attribute on the element
       cell.dataset.index = i  
       // Add row number between 0 and 19 to dataset 
-      const rowNum = (i - (i % 10)) / 10
-      // console.log('row number ->', rowNum)
-      cell.dataset.row = rowNum
+      // const nextRowNum = (i - (i % 4)) / 4
+      // // console.log('row number ->', rowNum)
+      // cell.dataset.row = nextRowNum
       // Add class grid-cell for styling
       cell.classList.add('next-grid-cell')
       // Add the cell element into the cells array
@@ -171,20 +178,27 @@ function init() {
   function createPiece() {
     // takes the array of the piece and current position and adds classes to divs with correspnding index
     currentPosition = startPosition
-    const array = currentPiece
     // or if new index numbers already have class occupied and out of play
-    for (let i = 0; i < array.length; i++) {
-      if (cells[array[i]].classList.contains('occupied') && cells[array[i]].classList.contains('out-of-play') ) {
+    for (let i = 0; i < currentPiece.length; i++) {
+      if (cells[currentPiece[i]].classList.contains('occupied') && cells[currentPiece[i]].classList.contains('out-of-play') ) {
         clearInterval(interval)
         endGame()
         return
       } else {
-        for (let i = 0; i < array.length; i++) {
-          cells[array[i]].classList.add('occupied', 'in-play', `${color}`)
+        for (let i = 0; i < currentPiece.length; i++) {
+          cells[currentPiece[i]].classList.add('occupied', 'in-play', `${color}`)
         }
       }
     }
+    for (let i = 0; i < nextCells.length; i++) {
+      nextCells[i].classList.remove('in-play', 'occupied', 'i', 'j', 'l', 'o', 's', 't', 'z')
+    }
+    for (let i = 0; i < nextPiece.length; i++) {
+      nextCells[nextPiece[i]].classList.add('occupied', 'in-play', `${nextColor}`)
+    }
+      
   }
+
   function getHighScores() {
     const getHighScore1 = localStorage.getItem('highScore1') || ''
     nameScore1 = getHighScore1.split(' ') || ''
@@ -253,41 +267,95 @@ function init() {
   }
 
   function randomPiece () {
+    if (Boolean(nextArrayObject) === false) {
+      // -> need an array of starting position arrays
+      position = startPosition
+      // Math random to pick number between 0 and 6
+      const randomNum = Math.floor(Math.random() * 7)
+      // Use this number to pick from starting position array
+      currentPiece = startArrays[randomNum]
+      // add color class and current array object
+      switch (randomNum) {
+        case 0:
+          color = 'i'
+          currentArrayObject = iArrays
+          break
+        case 1:
+          color = 'j'
+          currentArrayObject = jArrays
+          break
+        case 2: 
+          color = 'l'
+          currentArrayObject = lArrays
+          break
+        case 3:
+          color = 'o'
+          currentArrayObject = oArrays
+          break
+        case 4: 
+          color = 's'
+          currentArrayObject = sArrays
+          break
+        case 5:        
+          color = 't'
+          currentArrayObject = tArrays
+          break
+        case 6:
+          color = 'z'
+          currentArrayObject = zArrays
+          break
+      }
+      randomNextPiece()
+    } else {
+      currentArrayObject = nextArrayObject
+      currentPiece = nextGridPiece
+      color = nextColor
+      randomNextPiece()
+    }
+  }
+  function randomNextPiece () {
     // -> need an array of starting position arrays
     position = startPosition
     // Math random to pick number between 0 and 6
     const randomNum = Math.floor(Math.random() * 7)
     // Use this number to pick from starting position array
-    currentPiece = startArrays[randomNum]
+    nextGridPiece = startArrays[randomNum]
     // add color class and current array object
     switch (randomNum) {
       case 0:
-        color = 'i'
-        currentArrayObject = iArrays
+        nextColor = 'i'
+        nextPiece = [0, 1, 2, 3]
+        nextArrayObject = iArrays
         break
       case 1:
-        color = 'j'
-        currentArrayObject = jArrays
+        nextColor = 'j'
+        nextPiece = [0, 4, 5, 6, 7]
+        nextArrayObject = jArrays
         break
       case 2: 
-        color = 'l'
-        currentArrayObject = lArrays
+        nextColor = 'l'
+        nextPiece = [3, 7, 6, 5, 4]
+        nextArrayObject = lArrays
         break
       case 3:
-        color = 'o'
-        currentArrayObject = oArrays
+        nextColor = 'o'
+        nextPiece = [1, 2, 5, 6]
+        nextArrayObject = oArrays
         break
       case 4: 
-        color = 's'
-        currentArrayObject = sArrays
+        nextColor = 's'
+        nextPiece = [3, 2, 6, 5]
+        nextArrayObject = sArrays
         break
       case 5:        
-        color = 't'
-        currentArrayObject = tArrays
+        nextColor = 't'
+        nextPiece = [2, 5, 6, 7]
+        nextArrayObject = tArrays
         break
       case 6:
-        color = 'z'
-        currentArrayObject = zArrays
+        nextColor = 'z'
+        nextPiece = [0, 1, 5, 6]
+        nextArrayObject = zArrays
         break
     }
   }
@@ -326,6 +394,12 @@ function init() {
     for (let i = 0; i < cells.length; i++) {
       cells[i].classList.remove('in-play', 'out-of-play', 'occupied', 'i', 'j', 'l', 'o', 's', 't', 'z')
     }
+    // clear next grid and variables
+    for (let i = 0; i < nextCells.length; i++) {
+      nextCells[i].classList.remove('in-play', 'occupied', 'i', 'j', 'l', 'o', 's', 't', 'z')
+    }
+    nextArrayObject = {}
+    nextPiece = []
     // hide pause screen
     pauseScreen.classList.add('display-none')
     // display start screen
@@ -424,7 +498,6 @@ function init() {
     return validMove
   }
 
-
   function rotate() {
     // if true, rotations + 1. update current rotation
     rotations += 1
@@ -441,19 +514,16 @@ function init() {
     currentPiece = rotatedPiece
     array = currentPiece
     for (let i = 0; i < array.length; i++) {
-      console.log(array[i])
       cells[array[i]].classList.add('occupied', 'in-play', `${color}`)
     }
   }
 
-
   function landingCheck() {
     let landing
     const movedPiece = currentPiece.map(item => item + width)
-    const array = movedPiece
-    for (let i = 0; i < array.length; i++) {
+    for (let i = 0; i < movedPiece.length; i++) {
       // if new index numbers calculated from new position are outside of board
-      if (array[i] > cells.length - 1) {
+      if (movedPiece[i] > cells.length - 1) {
         landing = true
         clearInterval(interval)
         return landing
@@ -461,7 +531,7 @@ function init() {
         landing = false
       }
       // or if new index numbers already have class occupied and out of play
-      if (cells[array[i]].classList.contains('occupied') && cells[array[i]].classList.contains('out-of-play') ) {
+      if (cells[movedPiece[i]].classList.contains('occupied') && cells[movedPiece[i]].classList.contains('out-of-play') ) {
         landing = true
         clearInterval(interval)
         return landing
@@ -475,15 +545,13 @@ function init() {
     clearInterval(interval)
     // remove class in play from current position and add out of play
     position = currentPosition
-    const array = currentPiece
-    for (let i = 0; i < array.length; i++) {
-      cells[array[i]].classList.remove('in-play')
-      cells[array[i]].classList.add('out-of-play')
+    for (let i = 0; i < currentPiece.length; i++) {
+      cells[currentPiece[i]].classList.remove('in-play')
+      cells[currentPiece[i]].classList.add('out-of-play')
       // if cell has class out of play and in row 0, game over
     }
     // run checkRows
     checkRows()
-
     // After landing and clearing rows, if cells hav class out of play and row 0, game over
     for ( let i = 0; i < cells.length; i++) {
       if (cells[[i]].classList.contains('out-of-play') && parseInt(cells[[i]].dataset.row) === 0) {
@@ -507,7 +575,16 @@ function init() {
       movePiece(width)
     } else if (landingCheck() === true) {
       landing()
+      dropping = false
     }
+  }
+  
+  function hardDrop() {
+    while (dropping === true) {
+      clearInterval(interval)
+      fallInterval()
+    }
+    dropping = true
   }
 
   function movePiece(move) {
@@ -554,7 +631,6 @@ function init() {
     // if a value in rowObj = 10, add that key to array of rows to be cleared
     const keys = Object.keys(rowObj)
     keys.forEach((key) => {
-      console.log(`${key}: ${rowObj[key]}`)
       if (rowObj[key] > 9) {
         rowsToClear.push(parseInt(key))
       }
@@ -581,6 +657,10 @@ function init() {
       lineCount.innerHTML = lines
       score = score + 100
       currentScoreDisplay.innerHTML = score
+      // Play sound
+      clearRowSound.pause()
+      clearRowSound.currentTime = 0
+      clearRowSound.play()
       // for all cells that have the current row in their data, remove classes to clear
       const currentRow = rowsToClear[i]
       for (let cell = 0; cell < cells.length; cell++) {
@@ -613,6 +693,10 @@ function init() {
     clearInterval(interval)
     // display game over screen
     endScreen.classList.remove('display-none')
+    // Play game over sound
+    gameOverSound.pause()
+    gameOverSound.currentTime = 0
+    gameOverSound.play()
     // disable pause button
     pauseButton.disabled = true
     pauseButton.classList.add('disabled')
@@ -622,6 +706,13 @@ function init() {
     for (let i = 0; i < cells.length; i++) {
       cells[i].classList.remove('in-play', 'out-of-play', 'occupied', 'i', 'j', 'l', 'o', 's', 't', 'z')
     }
+    // clear next grid and variables
+    for (let i = 0; i < nextCells.length; i++) {
+      nextCells[i].classList.remove('in-play', 'occupied', 'i', 'j', 'l', 'o', 's', 't', 'z')
+    }
+    nextArrayObject = {}
+    nextPiece = []
+
     finalScoreDisplay.innerHTML = `${parseInt(score)}`
     if (score > highScore3 && score <= highScore2) {
       localStorage.setItem('highScore3', `${name} ${score}`)
@@ -667,6 +758,8 @@ function init() {
 
   function handleMovement(event) {
     const keyCode = event.keyCode
+    const enter = 13
+    const space = 32
     const left = 37
     const right = 39
     const down = 40
@@ -689,6 +782,10 @@ function init() {
     } else if (w === keyCode) {
       direction = 'clockwise'
       generateRotatedPiece()
+    } else if (enter === keyCode && startButton.disabled === false) {
+      startGame()
+    } else if (space === keyCode && startButton.disabled === true) {
+      hardDrop()
     }
   }
 

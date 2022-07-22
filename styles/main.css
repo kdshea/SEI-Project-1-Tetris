@@ -240,7 +240,7 @@ input[type=text] {
   display: flex;
   flex-wrap: wrap;
   width: 122px;
-  margin: 0 20px 20px 20px;
+  margin: 0 20px 40px 20px;
 }
 
 .next-grid-cell {
