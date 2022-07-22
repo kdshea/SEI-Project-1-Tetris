@@ -332,8 +332,9 @@ When # of divs with same row # data AND class occupied reaches 10 the row should
 
 
 # Futures Improvments
+* Some user feedback made me realize it would be a good idea to show the controls page after start, not just after clicking info button. Some people were confused about how to rotate.
 
-* Break functions into smaller functions with parameters to reuse blocks of code
+* Break functions into smaller functions with parameters to reuse blocks of code that are somewhate similar (ex: inside edgeCheck() and rotatedEdgeCheck() or movePiece() and rotate())
 
 * Add variables to CSS for colors, fonts, borders etc.
 
