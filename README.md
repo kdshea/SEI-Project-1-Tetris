@@ -307,10 +307,14 @@ When # of divs with same row # data AND class occupied reaches 10 the row should
 
 # Day 8 Friday July 22
 * Bugs:
-  * Trouble clearing non-consecutive rows
-  * Sometimes game doesn't end on last row and generates a new piece before ending
+  * x Trouble clearing non-consecutive rows
+  * x Sometimes game doesn't end on last row and generates a new piece before ending
 
 ### Extra Stuff (If Time Allows)
+* Start game from keyboard
+
+* Hard drop
+
 * Code to display next piece
 
 * Ghost piece showing where current piece will land

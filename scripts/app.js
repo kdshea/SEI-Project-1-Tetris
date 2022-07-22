@@ -172,11 +172,19 @@ function init() {
     // takes the array of the piece and current position and adds classes to divs with correspnding index
     currentPosition = startPosition
     const array = currentPiece
+    // or if new index numbers already have class occupied and out of play
     for (let i = 0; i < array.length; i++) {
-      cells[array[i]].classList.add('occupied', 'in-play', `${color}`)
+      if (cells[array[i]].classList.contains('occupied') && cells[array[i]].classList.contains('out-of-play') ) {
+        clearInterval(interval)
+        endGame()
+        return
+      } else {
+        for (let i = 0; i < array.length; i++) {
+          cells[array[i]].classList.add('occupied', 'in-play', `${color}`)
+        }
+      }
     }
   }
-
   function getHighScores() {
     const getHighScore1 = localStorage.getItem('highScore1') || ''
     nameScore1 = getHighScore1.split(' ') || ''
@@ -396,7 +404,6 @@ function init() {
   }
 
   function rotateEdgeCheck() {
-    // ! Change arrays so that on right side edge, even if rotating it won't go over?
     // Check if currentPiece is at edge, and if rotatedPiece will go over the edge
     let validMove = true
     for (let i = 0; i < currentPiece.length; i++) {
@@ -559,18 +566,15 @@ function init() {
 
   function clearRow() {
     let lowestIndex 
-
     // Starting at highest row number to be cleared and moving down
     // So lowest index will be start of smallest row number cleared
     // Update line count and score for every row cleared
-    const rowsDown = rowsToClear.length
-
     if (rowsToClear.length > 0) {
     // Update fallSpeed
       fallSpeed -= 50
     }
-
-    for (let i = rowsToClear.length - 1; i >= 0 ; i--) {
+    // for each row that needs to be cleared
+    for (let i = 0; i < rowsToClear.length ; i++) {
       lowestIndex = rowsToClear[i] * 10
       // Update lines and score
       lines = lines + 1
@@ -584,23 +588,24 @@ function init() {
           cells[cell].classList.remove('in-play', 'out-of-play', 'occupied', 'i', 'j', 'l', 'o', 's', 't', 'z')
         }
       }
-    }
-    for (let i = lowestIndex; i >= 0 ; i--) {
-      if (cells[i].classList.contains('occupied') && cells[i].classList.contains('out-of-play') ) {
-        // For cells with index lower than the cleared line, if they are occupied and out of play, get the class list
-        // Use shift to remove 'grid-cell' from the class list
-        // Remove the classes, shift the cell down 1 width, and add the classes back
-        const classList = cells[i].classList
-        const classListArray = Object.values(classList)
-        classListArray.shift()
-        cells[i].classList.remove(classListArray[0], classListArray[1], classListArray[2])
-        cells[i + width * rowsDown].classList.add(classListArray[0], classListArray[1], classListArray[2])
+      for (let index = lowestIndex; index >= 0 ; index--) {
+        if (cells[index].classList.contains('occupied') && cells[index].classList.contains('out-of-play') ) {
+          // For cells with index lower than the cleared line, if they are occupied and out of play, get the class list
+          // Use shift to remove 'grid-cell' from the class list
+          // Remove the classes, shift the cell down 1 width, and add the classes back
+          const classList = cells[index].classList
+          const classListArray = Object.values(classList)
+          classListArray.shift()
+          cells[index].classList.remove(classListArray[0], classListArray[1], classListArray[2])
+          cells[index + width].classList.add(classListArray[0], classListArray[1], classListArray[2])
+        }
       }
-      // Clear the rows being cleared and the lowest index
-      // Clear the rowObj 
-      lowestIndex = 
-      rowsToClear = []
     }
+  
+    // Clear the rows being cleared and the lowest index
+    // Clear the rowObj 
+    lowestIndex = 
+    rowsToClear = []
   }
 
   function endGame() {
