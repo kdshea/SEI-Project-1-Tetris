@@ -140,7 +140,7 @@ span, #enter-name {
   background-color: rgba( 33, 33, 33, 80%);
   height: 675px;
   width: 900px;
-  margin: 75px auto;
+  margin: 50px auto;
   display: flex;
   justify-content: space-around;
   border: var(--main-border-style);
@@ -333,6 +333,14 @@ button {
     padding: 30px 0px;
     box-shadow: 0px 8px 15px white;
     margin: 5px 0;
+}
+
+button:active:enabled {
+  transform: translateY(4px);
+}
+
+button:hover:enabled {
+  background-color: #737373;
 }
 
 #play-again {

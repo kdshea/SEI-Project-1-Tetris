@@ -323,7 +323,7 @@ When # of divs with same row # data AND class occupied reaches 10 the row should
 
 * x Prevent default behavior of space bar clicking on buttons
 
-* Hover effects for buttons?
+* x Hover and active effects for buttons
 
 * Add more comments/explanations in JS code
 
