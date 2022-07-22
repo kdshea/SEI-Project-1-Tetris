@@ -48,6 +48,7 @@ function init() {
   const nextCells = []
   const startPosition = 3
 
+  moveSound.muted = false
   clearRowSound.muted = false
   gameOverSound.muted = false
 
@@ -254,7 +255,7 @@ function init() {
       gameOverSound.muted = true
       soundControl.innerHTML = '<i class="fa-solid fa-volume-low"></i>'
     } else if (clearRowSound.muted === true) {
-      moveSound.muted = true
+      moveSound.muted = false
       clearRowSound.muted = false
       gameOverSound.muted = false
       soundControl.innerHTML = '<i class="fa-solid fa-volume-xmark"></i>'
