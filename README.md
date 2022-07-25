@@ -1,75 +1,32 @@
 # SEI-Tetris
 A tetris game using javascript
 
-
-
 # General Assembly SEI Project 1: Tetris
 
-* Link: 
+
+* Deployment Link: 
 https://kdshea.github.io/SEI-Tetris/
 
 # Overview and Concept:
 
 A grid-based game using JavaScript, HTML and CSS based on the classic arcade game Tetris
 
+# Timeframe and Working Team
+Share the timeframe given for the project and whether you worked independently, in a pair, or in a group.
+
 # Technologies used: 
 
 ## HTML
-● 
 ## CSS
-● 
 ## JavaScript
-● 
 
 
+# Brief
+Include the brief set by your instructional team here. This sets the context of the project you were working towards and mimics briefs you will be set later in your future roles. Bullets or a paragraph
 
 
-# Daily Overview
+# Planning
 
-# Day 1 Thursday July 14:
-
-### The project was introduced and I chose to do a tetris game. I brainstormed and wrote down some initial ideas of what the project goals and challenges will be. 
-
-  * Rough wireframe
-  * Found some tetris reference photos from classic version
-  * Researching how to use arrays for shapes and orientations of pieces
-  * Starting to write out some ideas and pseudocode on how to approach the game
-
-* Defined MVP as:
-shapes move down at an interval, user can rotate and move L and R, they stack on bottom of grid, randomly pick next piece, full row clears the row and other pieces move down, reaching top row ends game
-
-* Set goals for extras:
-display next piece, pause button, high scores with local storage, fast drop, ghost piece to show where it will land, speed up, rotate buttons for clockwise and counterclockwise
-
-### Misc Notes and Ideas from Day 1-
-* HTML:
-start button, pause button, score span, high score span, lines completed span, small grid to display next piece, grid for game
-
-* For each shape, an array of what boxes it occupies at starting position
-an array for each rotation (3 more)
-class for each shape with its color.Example for L:
-`[2, 0, 0],  
-[2, 2, 2],  
-[0, 0, 0];` Each array has to have a central point it can rotate around
-
-* Start position top middle
-  * Add class occupied to each box the shape takes up
-  * When you hit rotate, classes are reassgined to boxes from the rotation array using the index number current position of the central axis cell
-  * Prevent rotation if shape is on the edge
-
-* Set interval to move the shape + width down every interval
-
-* When reaches bottom line, interval stops. Those cells keep class occupied. New piece starts at start position, new interval starts. When new piece reaches cell below it that already has class occupied, interval stops, shape stays there.
-
-* If all cells in a row have class occupied, clear the class from all of them and move everything above that row down + width
-
-* When cells with occupied class are still at top row when interval stops because they reached a cell below that was occupied, game ends
-
-* Random function to pick a new piece each time
-
-# Day 2 Friday July 15: Detailed Plan
-
-### I took the rough ideas I had from Day One and polished them up and put together a detailed plan. Then, I started coding. I wrote code for HTML, basic CSS to display flex and adjust size, and wrote Javascript to generate divs that will be the game board.
 
 ## Tetris Plan
 
@@ -225,7 +182,67 @@ A grid-based game based on the class arcade game Tetris using JavaScript, HTML a
 * On page load, get high score info and display in HTML
 * On end of game and quit game, check if current score is > high score. Update high score with name and new score vlaue
 
-# Day 3 Sunday July 17
+# Build/Code Process
+
+
+# Build Process: Daily Overview
+
+The Build/Code Process will be the longest section of your ReadMe and will be most insightful to the engineers that review them. This is where you will discuss the steps you took to code the project.
+
+You want to see your ReadMes as a way to walk the engineers through your approach and problem solving from the start of the project through to the end.
+
+You'll need to include a minimum of 3-4 code snippets, highlighting code you're particularly proud of and these code snippets will have descriptions on what you did, how and why to set the context of the snippet you include. These explanations are important for the engineers, as they will want to understand what you did and the reasoning behind the steps you took.
+
+You don't need to document every single thing you coded, but walk them through the key sections of the project build.
+
+For any group project, you will just focus on your contributions. 
+
+Some people will document the build/code process by discussing the key stages they worked on. Others will do a day by day guide. It’s entirely up to you how you structure this, as long as you discuss all the key things above.
+
+# Day 1: Project Introduction and Detailed Plan
+
+### The project was introduced and I chose to do a tetris game. I brainstormed and wrote down some initial ideas of what the project goals and challenges will be. 
+
+  * Rough wireframe
+  * Found some tetris reference photos from classic version
+  * Researching how to use arrays for shapes and orientations of pieces
+  * Starting to write out some ideas and pseudocode on how to approach the game
+
+* Defined MVP as:
+shapes move down at an interval, user can rotate and move L and R, they stack on bottom of grid, randomly pick next piece, full row clears the row and other pieces move down, reaching top row ends game
+
+* Set goals for extras:
+display next piece, pause button, high scores with local storage, fast drop, ghost piece to show where it will land, speed up, rotate buttons for clockwise and counterclockwise
+
+### Misc Notes and Ideas
+* HTML:
+start button, pause button, score span, high score span, lines completed span, small grid to display next piece, grid for game
+
+* For each shape, an array of what boxes it occupies at starting position
+an array for each rotation (3 more)
+class for each shape with its color.Example for L:
+`[2, 0, 0],  
+[2, 2, 2],  
+[0, 0, 0];` Each array has to have a central point it can rotate around
+
+* Start position top middle
+  * Add class occupied to each box the shape takes up
+  * When you hit rotate, classes are reassgined to boxes from the rotation array using the index number current position of the central axis cell
+  * Prevent rotation if shape is on the edge
+
+* Set interval to move the shape + width down every interval
+
+* When reaches bottom line, interval stops. Those cells keep class occupied. New piece starts at start position, new interval starts. When new piece reaches cell below it that already has class occupied, interval stops, shape stays there.
+
+* If all cells in a row have class occupied, clear the class from all of them and move everything above that row down + width
+
+* When cells with occupied class are still at top row when interval stops because they reached a cell below that was occupied, game ends
+
+* Random function to pick a new piece each time
+
+### I took the rough ideas I had from Day One and polished them up and put together a detailed plan. Then, I started coding. I wrote code for HTML, basic CSS to display flex and adjust size, and wrote Javascript to generate divs that will be the game board.
+
+# Day 2
 
 * x Clean up CSS: group together repeating styles, use variables for colors and fonts to make them easier to change later
 
@@ -238,7 +255,7 @@ A grid-based game based on the class arcade game Tetris using JavaScript, HTML a
 * x Add data attribute for what row each grid div is in. 
 When # of divs with same row # data AND class occupied reaches 10 the row should clear
 
-# Day 4 Monday July 18
+# Day 3
 
 * x Write out click events for buttons and keyboard
 
@@ -259,7 +276,7 @@ When # of divs with same row # data AND class occupied reaches 10 the row should
 *  checkRows (left off here)
 
 
-# Day 5 Tuesday July 19
+# Day 4
 
 * x Check for full rows and clearing them
 * x Change score and line count
@@ -277,59 +294,84 @@ When # of divs with same row # data AND class occupied reaches 10 the row should
 * x If clearing multiple rows, move cells above down the appropriate number of rows
 
 
-# Day 6 Wednesday July 20
+# Day 5
 
 * x Fix bug filling top row where new shape overlaps with previous
-
 * x Speed up fallInterval after clearing rows
+* x Work on CSS styling for shapes and grids, buttons, fonts, graphics, background, text effects
 
-* x Work on CSS styling, graphics
-
-# Day 7 Thursday July 21
+# Day 6
 
 * x Finish up CSS
-
 * x Favicon
-
 * x Update HTML for 3 high scores
-
 * x Change high score function to store name and score in value
-
 * x Function to rotate counterclockwise
-
 * x Small grid to the right to display the upcoming piece that is not yet in play
-
 * x Fix edge behavior for rotations on right side for I, L, T, and S
-
 * x Create info screen, info button, close button and edit functions to display and hide it
-
 * x Write information screen
 
-# Day 8 Friday July 22
+# Day 7
+
 * Bugs:
   * x Trouble clearing non-consecutive rows
   * x Sometimes game doesn't end on last row and generates a new piece before ending
-
-### Extra Stuff (If Time Allows)
 * x Start game from keyboard on enter
-
 * x Hard drop on spacebar
-
 * x Sounds on game over and clear row
-
 * x Buttons to turn sound on and off
-
 * x Code to display next piece
-
 * x Prevent default behavior of space bar clicking on buttons
-
 * x Hover and active effects for buttons
-
 * x Added more comments/explanations in JS code
-
-
 ### Project Deadline 3pm
 
+
+# Challenges
+
+Challenges are great for showing your learning journey and problem solving, and this is a section that many engineers will check out. Every day of your engineering career you’ll encounter challenges, this is part of your growth and development. It’s the challenges you encounter that helps you become a stronger and more competent engineer. 
+
+Questions to answer here:
+What technical challenges did you come across? 
+Why were these challenges? 
+What problem solving did you do to rectify them?
+Team dynamics/ Project management
+Tools/Tech you used
+
+Insert your Challenges here:
+
+
+# Wins
+
+The Wins section is your opportunity to highlight the aspects of your project you are most proud of. See this as your chance to showcase these parts of your projects to the engineers reading your ReadMes.
+
+Things you could discuss here:
+Interesting problem solving you did
+Strong sections of code
+Collaboration with other team members
+Visual design of the project
+
+Insert your Wins here:
+
+# Key Learning/ Takeaways
+
+This section is one of the other most important parts of your ReadMe from an engineers’ perspective and helps to differentiate each of you from your classmates and team members. Engineers love to understand what you learn from each project and how it has shaped you as an engineer.See this as your opportunity to show the engineers how your skills grew during each project sprint. 
+
+Things you could discuss here:
+What Technologies/Tools do you now feel more confident with? Tell them specifically what you learnt about these. 
+What engineering processes did you become more comfortable with? Standups? Pair programming? Project management? Tell them what you learnt from these processes?
+
+Insert your Key Learnings/Takeaways here:
+
+
+# Bugs
+
+If you have any bugs in your project, it’s important that you flag them in your ReadMe. This helps the engineers reviewing your projects to understand that you are aware that there are issues - if you don’t flag these, then they won’t have that visibility that you know these problems are in your code and it can result in them not having a full understanding of your technical knowledge. 
+In either sentences or bullets, explain what the bugs are.
+If you have no bugs, you can leave this section blank.
+
+Insert your Bugs here:
 
 # Futures Improvments
 * Some user feedback made me realize it would be a good idea to show the controls page after start, not just after clicking info button. Some people were confused about how to rotate.
