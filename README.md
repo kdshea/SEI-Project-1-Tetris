@@ -1,5 +1,5 @@
 # SEI-Tetris
-A tetris game using javascript
+A tetris clone using vanilla JavaScript
 
 # General Assembly SEI Project 1: Tetris
 
