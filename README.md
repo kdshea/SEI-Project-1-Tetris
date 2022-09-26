@@ -5,7 +5,7 @@ A tetris clone using vanilla JavaScript
 
 
 * Deployment Link: 
-https://kdshea.github.io/SEI-Tetris/
+https://kdshea.github.io/Tetris-Clone/
 
 # Overview and Concept:
 
