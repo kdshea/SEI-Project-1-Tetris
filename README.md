@@ -1,385 +1,224 @@
-# SEI-Tetris
-A tetris clone using vanilla JavaScript
+# SEI Project One, Tetris Clone: A Browser-Based JavaScript Game
 
-# General Assembly SEI Project 1: Tetris
+# Table of contents
+* [Project Overview](#project-overview)
+* [Deployment Link](#deployment-link)
+* [Timeframe](#timeframe) 
+* [Technologies Used](#technologies-used)
+* [Brief](#brief) 
+* [Planning](#planning)
+* [Build Process](#build-process)
+* [Challenges](#challenges)
+* [Wins](#wins)
+* [Key Learnings](#key-learnings)
+* [Bugs](#bugs)
+* [Future Improvements](#future-improvements) 
+
+# Project Overview
+
+This was the first solo project I did for a Software Engineering Immersive course through General Assembly London. It is a grid-based game built using JavaScript, HTML and CSS based on the classic arcade game Tetris.
+
+# Deployment Link
+
+The game has been deployed with GitHub pages and is available [here.](https://kdshea.github.io/Tetris-Clone/)
 
 
-* Deployment Link: 
-https://kdshea.github.io/Tetris-Clone/
+# Timeframe
 
-# Overview and Concept:
+* Solo project completed over one week
 
-A grid-based game using JavaScript, HTML and CSS based on the classic arcade game Tetris
+# Technologies Used 
 
-# Timeframe and Working Team
-Share the timeframe given for the project and whether you worked independently, in a pair, or in a group.
-
-# Technologies used: 
-
-## HTML
-## CSS
-## JavaScript
-
+* JavaScript
+* CSS3
+* HTML5
+* GitHub Pages
+* Chrome Developer Tools
+* Excalidraw
 
 # Brief
-Include the brief set by your instructional team here. This sets the context of the project you were working towards and mimics briefs you will be set later in your future roles. Bullets or a paragraph
+ * Requirements:
+   *  The game should stop if a Tetrimino fills the highest row of the game board
+   * The player should be able to rotate each Tetrimino about its own axis
+   * If a line is completed it should be removed and the pieces above should take its place
 
+ * Suggested Enhancements:
+   * Responsive design
+   * Speed increases over time
+   * Persistent leaderboard using localStorage
 
 # Planning
 
+* I spent an entire day planning, and it made the workflow for the rest of the week really smooth. Based on the project brief, I defined the minimum viable product and extra stretch goals. I found a classic version of Tetris and took screenshots. I used them as references along with Excalidraw to make wireframe sketches of what the game should look like at different stages of play.
 
-## Tetris Plan
+ * Minimum Viable Product (MVP): 
+   * Pieces move down at an interval
+   * User can rotate pieces
+   * User can move pieces L and R
+   * Pieces stack on bottom of grid
+   * Randomly selects next piece
+   * Full row clears the row, other pieces move down
+   * Filling to top row ends the game
+   * Score and line count go up with each cleared row
+   * Functional start, pause, resume, and quit buttons
 
-## Overview and Concept:
-A grid-based game based on the class arcade game Tetris using JavaScript, HTML and CSS
+ * Stretch Goals:
+   * Display upcoming piece
+   * High scores with name and local storage
+   * User can drop pieces faster
+   * "Ghost" piece to show where it will land
+   * Interval of fall speeds up as rows are cleared
+   * Rotate buttons for clockwise and counterclockwise
 
-## MVP
-* Pieces move down at an interval
-* User can rotate pieces
-* User can move pieces L and R
-* Pieces stack on bottom of grid
-* Randomly selects next piece
-* Full row clears the row, other pieces move down
-* Filling to top row ends the game
-* Score and line count go up with each cleared row
-* Functional start, pause, resume, and quit buttons
+* I wrote out detailed plans and pseudocode for the HTML and CSS content I needed, buttons and game controls, the game board, the Tetris pieces and their rotations, different kinds of movement on click events and time intervals, and behavior for landing and clearing rows. 
 
-## Extra Goals
-* Display upcoming piece
-* High scores with name and local storage
-* User can drop pieces faster
-* "Ghost" piece to show where it will land
-* Interval of fall speeds up as rows are cleared
-* Rotate buttons for clockwise and counterclockwise
+* Below, I’ve included all the wireframes and pseudocode that went into planning. It is incredibly detailed because this was when I was figuring out how the logic of the movement and game would work. For the sake of time, I won't be offended if you skip straight to my [Build Process](#build-process). 
 
-## Wireframes
-### Start 
-![Start](Plan/Wireframes/start-wireframe.png)
-  * disable pause button
-  * empty inner score and linen count and next shape
-  * clear next piece grid
+ ## Wireframes
 
-### Play
-![Play](Plan/Wireframes/play-wireframe.png)
-  * disable start button
+ * Start 
+	 * At start of game: disable pause button, empty inner score and linen count and next shape, clear next piece grid
 
-### Paused
-![Pause](Plan/Wireframes/paused-wireframe.png)
-  * disable start and pause
+<img src="Plan/Wireframes/start-wireframe.png" alt="Start Screen" style="width:300px;"/>
 
-### End of Game
-![End](Plan/Wireframes/end-wireframe.png)
-  * hide start and pause buttons
-  * add a play again button under final score
-  * display if new high score in another span
-  * Clear next piece grid
+ * Play
+	 * During game play: disable start button
 
-## HTML
-* Buttons and scoreboards with spans
-* Grid divs will be generated using Javascript
+<img src="Plan/Wireframes/play-wireframe.png" alt="Play" style="width:300px;"/>
 
-## CSS
-* Classes for:
-  * cells occupied by a piece (in play or out of play)
-  * cells that are part of piece in-play
-  * cells that are stacked and out-of-play
-  * each type of piece for corresponding color
+ * Paused
+ 	* When game is paused: disable start and pause
 
+<img src="Plan/Wireframes/paused-wireframe.png" alt="Pause Screen" style="width:300px;"/>
 
-## Controls
-* Left arrow for Left
-* Right arrow for Right
-* Q for rotate clockwise
+ * End of Game
+	 * At end of game: hide start and pause buttons, add a play again button under final score, display if new high score in another span, clear next piece grid
 
-  * Possibly W for rotate counter-clockwise
-  * Possibly Down arrow to drop faster
+<img src="Plan/Wireframes/end-wireframe.png" alt="End Screen" style="width:300px;"/>
 
-* Start, pause, resume, and quit using on screen buttons
+## Pseudocode
 
-![Keyboard](Plan/Wireframes/keyboard-controls-wireframe.png)
+ * HTML
+   * Start button, pause button, current score span, high score span, lines completed span, small grid to display next piece, grid for game
+   * Grid divs will be generated using JavaScript
 
+ * CSS
+   * Classes for:
+    * cells occupied by a piece (in play or out of play)
+    * cells that are part of piece in-play
+    * cells that are stacked and out-of-play
+    * each type of piece for corresponding color
 
-## Grid
-![Grid](Plan/Wireframes/tetris-board-wireframe.png)
+ * Controls
+   * Left arrow for Left
+   * Right arrow for Right
+   * Q for rotate clockwise
+    * Possibly W for rotate counter-clockwise
+    * Possibly Down arrow to drop faster
+   * Start, pause, resume, and quit using on screen buttons
 
-## Pieces
-* Arrays containing each piece and its rotations
+<img src="Plan/Wireframes/keyboard-controls-wireframe.png" alt="Keyboard Controls" style="width:300px;"/>
 
-* Example for "T" piece starting position array calculated using the top left corner as the reference position
+ * Grid
+		
+<img src="Plan/Wireframes/tetris-board-wireframe.png" alt="Game Board" style="width:300px;"/>
 
-### [position + 1,   position + width,   position + width + 1,   position + width + 2]
+ * Pieces
+   * Arrays containing each piece and its rotations
+   * Example for "T" piece starting position array calculated using the top left corner as the reference position
 
-![T](Plan/Wireframes/t-start.png)
+	* [position + 1,   position + width,   position + width + 1,   position + width + 2]
 
+<img src="Plan/Wireframes/t-start.png" alt="T Piece" style="width:150px;"/>
 
-### Complete Diagram of Pieces and Rotations
-![Pieces](Plan/Wireframes/pieces-wireframe.png)
+ * Complete Diagram of Pieces and Rotations
 
-## Random Piece Selection
-* Object containing the arrays of the 7 possible pieces in their starting orientations
-* Math.random to select a a piece
+<img src="Plan/Wireframes/pieces-wireframe.png" alt="All Game Pieces" style="width:300px;"/>
 
-## Left and Right Movement
-* Click events to add 1 or subtract 1 from the index numbers of cells occupied by the piece in-play
+ * Random Piece Selection
+   * Object containing the arrays of the 7 possible pieces in their starting orientations
+   * Add class “occupied” to each grid box the shape takes up
+   * Math.random to select a new piece
 
-## Falling Movement
-* Start pieces from starting reference position at index 3 and fill other cells relative to that one
-* setInterval to add + width to the index numbers of cells occupied by the piece in-play
+* Left and Right Movement
+   * Click events to add 1 or subtract 1 from the index numbers of cells occupied by the piece in-play
 
-## Rotation Movement
-* During game play, keep track of current reference position by adding interval and L and R movements to it
-* On rotation, remove class from current in play cells and add to new cells using the rotation array values calculated from the current reference point
-* Have an variable for how many rotations from start it has done to calculate which array version to use for the new cells. Number of rotations % 4 = 0 would bring back to the starting position
+* Falling Movement
+   * Start pieces from starting reference position at the top middle of the board (index 3) and fill other cells relative to that one
+   * setInterval to add the board width to the index numbers of cells occupied by the piece in-play – this shifts the cells down 1 row
 
-## Edge Behavior
-* Don't allow rotations or left or right movements if doing so would require a cell at index % 10 = 0 to go left or a cell at index % 10 = 9 to go right
-* Don't add/remove any classes and don't change the current reference position 
-
-## Landing 
-* Stop interval if the index of the next cell is betweeen 190 and 199 OR if index of would-be next cell already has classes occupied and out-of-play
-* Clear interval, remove class in play from active piece and add class out of play
-
-## Clearing a Row
-* If all cells between index % 10 = 0 and index % 10 = 9 of the same row have class occupied, clear the row
-* Remove classes occupied, in-play, and out-of-play from that row
-
-
-## Moving Rows Following a Clear
-* After a row is cleared, add + width to all the occupied cells with an index lower than the lowest index of that row
-
-## Filling Highest Row (End Game)
-* If a cell has class out-of-play AND index between 0 and 9, the game is over
-* Stop interval
-* Clear grid, removing all occupied classes and in-play or out-of-play
-* Display game over div and final score
-
-## Start Button
-* Take input from name span
-* Removes Tetris div and name div
-* Selects random piece
-* Adds class to cells to display piece
-* Starts interval to fall
-
-## Pause Button
-* Stops interval
-* Hides game grid
-* Shows paused div, resume, and quit buttons
-
-## Resume Button
-* Hides paused div, resume, and quit buttons
-* Starts fall interval
-
-## Quit Button
-* Clears grid, removing all occupied classes and in-play or out-of-play
-* Reset score and line count
-* Display start div and name input span
-
-## Play Again Button
-* Clear game over screen
-* Back to start screen
-
-## Name Input and High Score Local Storage
-* On page load, get high score info and display in HTML
-* On end of game and quit game, check if current score is > high score. Update high score with name and new score vlaue
-
-# Build/Code Process
-
-
-# Build Process: Daily Overview
-
-The Build/Code Process will be the longest section of your ReadMe and will be most insightful to the engineers that review them. This is where you will discuss the steps you took to code the project.
-
-You want to see your ReadMes as a way to walk the engineers through your approach and problem solving from the start of the project through to the end.
-
-You'll need to include a minimum of 3-4 code snippets, highlighting code you're particularly proud of and these code snippets will have descriptions on what you did, how and why to set the context of the snippet you include. These explanations are important for the engineers, as they will want to understand what you did and the reasoning behind the steps you took.
-
-You don't need to document every single thing you coded, but walk them through the key sections of the project build.
-
-For any group project, you will just focus on your contributions. 
-
-Some people will document the build/code process by discussing the key stages they worked on. Others will do a day by day guide. It’s entirely up to you how you structure this, as long as you discuss all the key things above.
-
-# Day 1: Project Introduction and Detailed Plan
-
-### The project was introduced and I chose to do a tetris game. I brainstormed and wrote down some initial ideas of what the project goals and challenges will be. 
-
-  * Rough wireframe
-  * Found some tetris reference photos from classic version
-  * Researching how to use arrays for shapes and orientations of pieces
-  * Starting to write out some ideas and pseudocode on how to approach the game
-
-* Defined MVP as:
-shapes move down at an interval, user can rotate and move L and R, they stack on bottom of grid, randomly pick next piece, full row clears the row and other pieces move down, reaching top row ends game
-
-* Set goals for extras:
-display next piece, pause button, high scores with local storage, fast drop, ghost piece to show where it will land, speed up, rotate buttons for clockwise and counterclockwise
-
-### Misc Notes and Ideas
-* HTML:
-start button, pause button, score span, high score span, lines completed span, small grid to display next piece, grid for game
-
-* For each shape, an array of what boxes it occupies at starting position
-an array for each rotation (3 more)
-class for each shape with its color.Example for L:
-`[2, 0, 0],  
-[2, 2, 2],  
-[0, 0, 0];` Each array has to have a central point it can rotate around
-
-* Start position top middle
-  * Add class occupied to each box the shape takes up
-  * When you hit rotate, classes are reassgined to boxes from the rotation array using the index number current position of the central axis cell
-  * Prevent rotation if shape is on the edge
-
-* Set interval to move the shape + width down every interval
-
-* When reaches bottom line, interval stops. Those cells keep class occupied. New piece starts at start position, new interval starts. When new piece reaches cell below it that already has class occupied, interval stops, shape stays there.
-
-* If all cells in a row have class occupied, clear the class from all of them and move everything above that row down + width
-
-* When cells with occupied class are still at top row when interval stops because they reached a cell below that was occupied, game ends
-
-* Random function to pick a new piece each time
-
-### I took the rough ideas I had from Day One and polished them up and put together a detailed plan. Then, I started coding. I wrote code for HTML, basic CSS to display flex and adjust size, and wrote Javascript to generate divs that will be the game board.
-
-# Day 2
-
-* x Clean up CSS: group together repeating styles, use variables for colors and fonts to make them easier to change later
-
-* x Write out variables in JS to target elements
-
-* x Make arrays in JS for shapes and orientations of pieces
-
-* x Pseudocode for necessary functions
-
-* x Add data attribute for what row each grid div is in. 
-When # of divs with same row # data AND class occupied reaches 10 the row should clear
-
-# Day 3
-
-* x Write out click events for buttons and keyboard
-
-### Order to code functions:
-* x  Start button
-* x  Random piece
-* x  Move piece
-* x  Fall interval
-* x  Pause button
-* x  Resume button
-* x  Landing
-* x  Left movement
-* x  Right movement
-* x  Down movement
-* x  Quit game
-* x  Edge check
-* x  End game
-*  checkRows (left off here)
-
-
-# Day 4
-
-* x Check for full rows and clearing them
-* x Change score and line count
-* x High scores local storage
-
-* x Rearrange arrays of piece into objects
-  * At first, coded arrays to just make the shapes and filled in cells from top to bottom, elft to right. Had to go back in and write them again so that the each cell in the array mapped to the corresponding cell when the shape rotated 90 degress clockwise. 
-
-* x Rotate:
-  * x keep track of number of rotations
-  * x select array of new rotation
-  * x checkEdges
-
-* x Fix bugs in row clearing
-* x If clearing multiple rows, move cells above down the appropriate number of rows
-
-
-# Day 5
-
-* x Fix bug filling top row where new shape overlaps with previous
-* x Speed up fallInterval after clearing rows
-* x Work on CSS styling for shapes and grids, buttons, fonts, graphics, background, text effects
-
-# Day 6
-
-* x Finish up CSS
-* x Favicon
-* x Update HTML for 3 high scores
-* x Change high score function to store name and score in value
-* x Function to rotate counterclockwise
-* x Small grid to the right to display the upcoming piece that is not yet in play
-* x Fix edge behavior for rotations on right side for I, L, T, and S
-* x Create info screen, info button, close button and edit functions to display and hide it
-* x Write information screen
-
-# Day 7
-
-* Bugs:
-  * x Trouble clearing non-consecutive rows
-  * x Sometimes game doesn't end on last row and generates a new piece before ending
-* x Start game from keyboard on enter
-* x Hard drop on spacebar
-* x Sounds on game over and clear row
-* x Buttons to turn sound on and off
-* x Code to display next piece
-* x Prevent default behavior of space bar clicking on buttons
-* x Hover and active effects for buttons
-* x Added more comments/explanations in JS code
-### Project Deadline 3pm
-
+* Rotation Movement
+   * During game play, keep track of current reference position by adding interval and L and R movements to it
+   * On rotation, remove class from current in-play cells and add to new cells using the rotation array values calculated from the current reference point
+   * Have a variable for how many rotations from start it has done to calculate which array version to use for the new cells. Number of rotations % 4 = 0 would bring back to the starting position
+
+* Edge Behavior
+   * Don't allow rotations or left or right movements if doing so would require a cell at index % 10 = 0 to go left or a cell at index % 10 = 9 to go right
+   * Don't add/remove any classes and don't change the current reference position 
+
+* Landing 
+   * Stop interval if the piece reaches the bottom of the grid (i.e. if the index of the next cell is between 190 and 199) OR if the index of would-be next cell already has classes “occupied” and “out-of-play”
+   * Clear interval, remove class in play from active piece and add class out of play
+
+* Clearing a Row
+   * If all cells between index % 10 = 0 and index % 10 = 9 of the same row have class “occupied”, clear the row
+   * Remove classes “occupied”, “in-play”, and “out-of-play” from all the cells of that row
+
+* Moving Rows Following a Clear
+   * After a row is cleared, add + width to all the occupied cells with an index lower than the lowest index of that row
+
+* Filling Highest Row (End Game)
+   * If a cell has class out-of-play AND index between 0 and 9, the game is over
+   * Stop interval
+   * Clear grid, removing all occupied classes and in-play or out-of-play
+   * Display game over div and final score
+
+* Start Button
+   * Take input from name span
+   * Removes Tetris div and name div
+   * Selects random piece
+   * Adds class to cells to display piece
+   * Starts interval to fall
+
+* Pause Button
+   * Stops interval
+   * Hides game grid
+   * Shows paused div, resume, and quit buttons
+
+* Resume Button
+   * Hides paused div, resume, and quit buttons
+   * Starts fall interval
+
+* Quit Button
+   * Clears grid, removing all occupied classes and in-play or out-of-play
+   * Reset score and line count
+   * Display start div and name input span
+
+* Play Again Button
+   * Clear game over screen
+   * Back to start screen
+
+* Name Input and High Score Local Storage
+   * On page load, get high score info and display in HTML
+   * At the end of the game and when quitting the game, check if current score is greater than the high score. Update high score with name and new score value
+
+# Build Process
+
+# Wins 
 
 # Challenges
 
-Challenges are great for showing your learning journey and problem solving, and this is a section that many engineers will check out. Every day of your engineering career you’ll encounter challenges, this is part of your growth and development. It’s the challenges you encounter that helps you become a stronger and more competent engineer. 
-
-Questions to answer here:
-What technical challenges did you come across? 
-Why were these challenges? 
-What problem solving did you do to rectify them?
-Team dynamics/ Project management
-Tools/Tech you used
-
-Insert your Challenges here:
-
-
-# Wins
-
-The Wins section is your opportunity to highlight the aspects of your project you are most proud of. See this as your chance to showcase these parts of your projects to the engineers reading your ReadMes.
-
-Things you could discuss here:
-Interesting problem solving you did
-Strong sections of code
-Collaboration with other team members
-Visual design of the project
-
-Insert your Wins here:
-
-# Key Learning/ Takeaways
-
-This section is one of the other most important parts of your ReadMe from an engineers’ perspective and helps to differentiate each of you from your classmates and team members. Engineers love to understand what you learn from each project and how it has shaped you as an engineer.See this as your opportunity to show the engineers how your skills grew during each project sprint. 
-
-Things you could discuss here:
-What Technologies/Tools do you now feel more confident with? Tell them specifically what you learnt about these. 
-What engineering processes did you become more comfortable with? Standups? Pair programming? Project management? Tell them what you learnt from these processes?
-
-Insert your Key Learnings/Takeaways here:
-
+# Key Learnings
 
 # Bugs
 
-If you have any bugs in your project, it’s important that you flag them in your ReadMe. This helps the engineers reviewing your projects to understand that you are aware that there are issues - if you don’t flag these, then they won’t have that visibility that you know these problems are in your code and it can result in them not having a full understanding of your technical knowledge. 
-In either sentences or bullets, explain what the bugs are.
-If you have no bugs, you can leave this section blank.
+# Future Improvements
 
-Insert your Bugs here:
-
-# Futures Improvments
-* Some user feedback made me realize it would be a good idea to show the controls page after start, not just after clicking info button. Some people were confused about how to rotate.
-
-* Break functions into smaller functions with parameters to reuse blocks of code that are somewhate similar (ex: inside edgeCheck() and rotatedEdgeCheck() or movePiece() and rotate())
-
+* Things that could be added in the future:
+* Some user feedback made me realize it would be a good idea to show the controls page after start, not just after clicking the info button. Some people were confused about how to rotate.
+* Break functions into smaller functions with parameters to reuse blocks of code that are somewhat similar (ex: inside edgeCheck() and rotatedEdgeCheck() or movePiece() and rotate())
 * Add variables to CSS for colors, fonts, borders etc.
-
 * CSS transition animation for pieces falling and hard drop
+* Ghost piece showing where current piece in play will land
 
-* Ghost piece showing where current piece will land
+
