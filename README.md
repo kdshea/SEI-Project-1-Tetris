@@ -16,7 +16,7 @@
 
 # Project Overview
 
-This was the first solo project I did for a Software Engineering Immersive course through General Assembly London. It is a grid-based game built using JavaScript, HTML and CSS based on the classic arcade game Tetris.
+This was the first project I did for a Software Engineering Immersive course through General Assembly London. It is a grid-based game built using JavaScript, HTML and CSS based on the classic arcade game Tetris.
 
 # Deployment Link
 
@@ -72,29 +72,29 @@ The game has been deployed with GitHub pages and is available [here.](https://kd
 
 * I wrote out detailed plans and pseudocode for the HTML and CSS content I needed, buttons and game controls, the game board, the Tetris pieces and their rotations, different kinds of movement on click events and time intervals, and behavior for landing and clearing rows. 
 
-* Below, I’ve included all the wireframes and pseudocode that went into planning. It is incredibly detailed because this was when I was figuring out how the logic of the movement and game would work. For the sake of time, I won't be offended if you skip straight to my [Build Process](#build-process). 
+* Below, I’ve included all the wireframes and pseudocode that went into planning. It is incredibly detailed because this was when I was figuring out the logic of how movement in the game would work. For the sake of time, I won't be offended if you skip straight to my [Build Process](#build-process). 
 
  ## Wireframes
 
  * Start 
 	 * At start of game: disable pause button, empty inner score and linen count and next shape, clear next piece grid
 
-<img src="Plan/Wireframes/start-wireframe.png" alt="Start Screen" style="width:300px;"/>
+<p align="center"> <img src="Plan/Wireframes/start-wireframe.png" alt="Start Screen" style="width:325px;"/> </p>
 
  * Play
 	 * During game play: disable start button
 
-<img src="Plan/Wireframes/play-wireframe.png" alt="Play" style="width:300px;"/>
+<p align="center"> <img src="Plan/Wireframes/play-wireframe.png" alt="Play" style="width:325px;"/> </p>
 
  * Paused
  	* When game is paused: disable start and pause
 
-<img src="Plan/Wireframes/paused-wireframe.png" alt="Pause Screen" style="width:300px;"/>
+<p align="center"> <img src="Plan/Wireframes/paused-wireframe.png" alt="Pause Screen" style="width:325px;"/> </p>
 
  * End of Game
 	 * At end of game: hide start and pause buttons, add a play again button under final score, display if new high score in another span, clear next piece grid
 
-<img src="Plan/Wireframes/end-wireframe.png" alt="End Screen" style="width:300px;"/>
+<p align="center"> <img src="Plan/Wireframes/end-wireframe.png" alt="End Screen" style="width:325px;"/> </p>
 
 ## Pseudocode
 
@@ -117,11 +117,12 @@ The game has been deployed with GitHub pages and is available [here.](https://kd
     * Possibly Down arrow to drop faster
    * Start, pause, resume, and quit using on screen buttons
 
-<img src="Plan/Wireframes/keyboard-controls-wireframe.png" alt="Keyboard Controls" style="width:300px;"/>
+<p align="center"> <img src="Plan/Wireframes/keyboard-controls-wireframe.png" alt="Keyboard Controls" style="width:600px;"/> </p>
 
  * Grid
+ 	* Each cell on the grid is a div
 		
-<img src="Plan/Wireframes/tetris-board-wireframe.png" alt="Game Board" style="width:300px;"/>
+<p align="center"> <img src="Plan/Wireframes/tetris-board-wireframe.png" alt="Game Board" style="width:500px;"/> </p>
 
  * Pieces
    * Arrays containing each piece and its rotations
@@ -129,11 +130,11 @@ The game has been deployed with GitHub pages and is available [here.](https://kd
 
 	* [position + 1,   position + width,   position + width + 1,   position + width + 2]
 
-<img src="Plan/Wireframes/t-start.png" alt="T Piece" style="width:150px;"/>
+<p align="center"> <img src="Plan/Wireframes/t-start.png" alt="T Piece" style="width:100px;"/> </p>
 
  * Complete Diagram of Pieces and Rotations
 
-<img src="Plan/Wireframes/pieces-wireframe.png" alt="All Game Pieces" style="width:300px;"/>
+<p align="center"> <img src="Plan/Wireframes/pieces-wireframe.png" alt="All Game Pieces" style="width:500px;"/> </p>
 
  * Random Piece Selection
    * Object containing the arrays of the 7 possible pieces in their starting orientations
@@ -204,21 +205,101 @@ The game has been deployed with GitHub pages and is available [here.](https://kd
 
 # Build Process
 
+## Day 1
+
+* The project was introduced and I brainstormed some initial ideas of what the project goals and challenges would be. I spent the first day working on ideas, wireframes, and pseudocode that is detailed above in the [Planning](#planning) section.
+
+## Day 2
+
+* I dove into coding, writing out some HTML to make a container for the game board and a createGrid function to generate the game board divs dynamically when the page loads. For each div, I added a data attribute for what row the div is in as well as  a data attrigute of its index number.
+* I made variables in JavaScript to target all the DOM elements I would need to use in later functions.
+* There are 7 shapes in Tetris represented by the letters I, O, T, S, Z, J, and L. I used a reference point on the game grid called "position" and made an array for each piece that would calculate what index number cells would be occupied by the Tetris piece if it started at the index number of the reference position. I repeated this for each possible orientation the shape could have when it was rotated. 
+* Later in the week, I ended u pcoming back and putting the arrays together into objects where the keys were 1, 2, 3, 4 and their values were the position arrays that rotated 90 degrees each time. The starting orientation is the array of key 1, and the starting posiition is index number 4 (top and center of the board).
+* I wrote out more detailed pseudocode for all the JavaScript function that I would need to code for the game and put them in the order that I should write them in so I could test them as I worked.
+
+## Day 3
+
+* I wrote out click events for all the on-screen buttons and keyboard contols.
+* I worked on JavaScript functions for the rest of the day:
+	* Start button
+	* Random piece
+	* Move piece
+	* Fall interval
+	* Pause button
+	* Resume button
+	* Landing
+	* Left movement
+	* Right movement
+	* Down movement
+	* Quit game
+	* Edge check
+	* End game
+
+## Day 4
+
+* Clearing rows and rotating pieces were 2 of the functions that were a little more complex and had to be broken down. 
+* Clearing a row included:
+	* Checking for full rows
+	* Removing classes to clear them
+	* Changing score and line count
+	* If clearing multiple rows, moving cells down the appropriate number
+* Rotating a piece included:
+	* Keeping track of the number of rotations
+	* Selecting the appropriate positional array of the new rotation
+	* Checking the edges to make sure the new rotation is possible
+* I added a function to take the name input from the beginning of the game and add it with a high score to local storage. 
+
+## Day 5
+
+* The majority of this day was dedicated to styling. I wrote CSS for the shapes and their colors, the grids, buttons, fonts, text effects, graphics, and backgrounds. 
+* I added some code so that when a row is cleared, the game is sped up by decreasing the setInterval of the falling pieces.
+
+## Day 6
+
+* I was happy to have completed an MVP, so I finished styling and spent most of this day orking on stretch goals. I finished up the CSS I had worked on the day before to get a nice looking product. I added a favicon. I also added an info screen with game controls and functions to hide and display it. 
+*  I edited the HTML to make 3 high score display spots. I wrote a getHighScore function that would get the 3 high scores from local storage to display on the page load. I added to the endGame function so that it would check the final score, and if it was higher than the high scores in storage it would update the local storage. 
+*  I added a function to rotate counter-clockwise. I fixed a bug in the edge behavior for rotations of the right side for the I, L, T and S pieces.
+*  I added to the createGrid function to make a smaller grid to the right of the game board to display the upcoming piece.
+
+## Day 7
+
+* I fixed a few bugs I had noticed:
+	* There was trouble clearing non-consecutive rows.
+	* Sometimes, when the top row was filled the game didn't end until a new piece was generated and overlapped with the top row. 
+* Some last minute details I was able to add:
+	* Start the game from hitting enter on keyboard
+	* Hard drop piece by hitting space bar and prevent default behavior of space bar clicking buttons
+	* Sounds on game over and when clearing a row
+	* Buttons to turn sounds on and off
+	* Hover and active effects for buttons
+	* Added comments and explanations into JavaScript
+
 # Wins 
+
+* Rotating pieces
+* Checking edges
 
 # Challenges
 
+* Clearing multiple rows, clearing nonconsecutive rows
+* Displaying upcoming piece
+
 # Key Learnings
 
+* Working with logic in JavaScript. I planned my project really well and knew everything I needed to do – the challenge was in figuring out solutions to the logic problems of moving with user input, moving with time intervals, checking for occupied spaces, clearing rows etc.
+
+
 # Bugs
+
+* The only bug that I've picked up on so far is that the first piece at the start of the game doesn’t rotate but all the following pieces will.
 
 # Future Improvements
 
 * Things that could be added in the future:
-* Some user feedback made me realize it would be a good idea to show the controls page after start, not just after clicking the info button. Some people were confused about how to rotate.
-* Break functions into smaller functions with parameters to reuse blocks of code that are somewhat similar (ex: inside edgeCheck() and rotatedEdgeCheck() or movePiece() and rotate())
-* Add variables to CSS for colors, fonts, borders etc.
-* CSS transition animation for pieces falling and hard drop
-* Ghost piece showing where current piece in play will land
+	* Some user feedback made me realize it would be a good idea to show the controls page after start, not just after clicking the info button. Some people were confused about how to rotate.
+	* Break functions into smaller functions with parameters to reuse blocks of code that are somewhat similar (ex: inside edgeCheck() and rotatedEdgeCheck() or movePiece() and rotate())
+	* Add variables to CSS for colors, fonts, borders etc.
+	* CSS transition animation for pieces falling and hard drop
+	* Ghost piece showing where current piece in play will land
 
 
