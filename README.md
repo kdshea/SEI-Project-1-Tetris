@@ -175,6 +175,32 @@ The game has been deployed with GitHub pages and is available [here.](https://kd
    * Clear grid, removing all occupied classes and in-play or out-of-play
    * Display game over div and final score
 
+* Rotation Movement
+   * During game play, keep track of current reference position by adding interval and L and R movements to it
+   * On rotation, remove class from current in-play cells and add to new cells using the rotation array values calculated from the current reference point
+   * Have a variable for how many rotations from start it has done to calculate which array version to use for the new cells. Number of rotations % 4 = 0 would bring back to the starting position
+
+* Edge Behavior
+   * Don't allow rotations or left or right movements if doing so would require a cell at index % 10 = 0 to go left or a cell at index % 10 = 9 to go right
+   * Don't add/remove any classes and don't change the current reference position 
+
+* Landing 
+   * Stop interval if the piece reaches the bottom of the grid (i.e. if the index of the next cell is between 190 and 199) OR if the index of would-be next cell already has classes “occupied” and “out-of-play”
+   * Clear interval, remove class in play from active piece and add class out of play
+
+* Clearing a Row
+   * If all cells between index % 10 = 0 and index % 10 = 9 of the same row have class “occupied”, clear the row
+   * Remove classes “occupied”, “in-play”, and “out-of-play” from all the cells of that row
+
+* Moving Rows Following a Clear
+   * After a row is cleared, add + width to all the occupied cells with an index lower than the lowest index of that row
+
+* Filling Highest Row (End Game)
+   * If a cell has class out-of-play AND index between 0 and 9, the game is over
+   * Stop interval
+   * Clear grid, removing all occupied classes and in-play or out-of-play
+   * Display game over div and final score
+
 * Start Button
    * Take input from name span
    * Removes Tetris div and name div
@@ -328,7 +354,6 @@ The game has been deployed with GitHub pages and is available [here.](https://kd
 # Key Learnings
 
 * I really enjoyed working on this project and I'm proud of what I was able to come up with in a week. The biggest challenge here was working through the logic problems in JavaScript of moving with user input, moving with time intervals, checking for occupied spaces, clearing rows etc. I love puzzles and had a lot of fun with it, even when I ran into roadblocks or had to rethink my approach. I planned my project really well and knew everything I needed to do. The first day, I was a little worried that it was taking me so long to plan my project that I was going to run out of time to actually build everything. The early pseudocode I wrote actually made the work later so much smoother and I got things done faster than I anticipated. 
-
 
 # Bugs
 
