@@ -602,7 +602,7 @@ function init() {
 
   function landingCheck() {
     let landing
-    // Check if movedPiece can fall one more width before  changing the currentPiece
+    // Check if movedPiece can fall one more width before changing the currentPiece
     const movedPiece = currentPiece.map(item => item + width)
     for (let i = 0; i < movedPiece.length; i++) {
       // if new index numbers calculated from new position are outside of board
@@ -654,7 +654,6 @@ function init() {
     // argument is how much the currentPosition will move
     // remove classes occupied and in play
     // add occupied and in play to new position
-    // if landing false, update new position and movePiece
     // remove class occupied/ in play from current position
     for (let i = 0; i < currentPiece.length; i++) {
       cells[currentPiece[i]].classList.remove('occupied', 'in-play', `${color}`)
