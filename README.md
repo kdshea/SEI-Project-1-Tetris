@@ -23,7 +23,7 @@ This was the first project I did for a Software Engineering Immersive course thr
 
 The game has been deployed with GitHub pages and is available [here.](https://kdshea.github.io/Tetris-Clone/)
 
-<p align="center"> <img src="Plan/Wireframes/Tetris-Github-Preview.png" alt="Tetris" style="width:600px;"/> </p>
+<p align="center"> <img src="Plan/README-Images/Tetris-GitHub-Preview.png" alt="Tetris" style="width:600px;"/> </p>
 
 # Timeframe
 
