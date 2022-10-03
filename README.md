@@ -175,32 +175,6 @@ The game has been deployed with GitHub pages and is available [here.](https://kd
    * Clear grid, removing all occupied classes and in-play or out-of-play
    * Display game over div and final score
 
-* Rotation Movement
-   * During game play, keep track of current reference position by adding interval and L and R movements to it
-   * On rotation, remove class from current in-play cells and add to new cells using the rotation array values calculated from the current reference point
-   * Have a variable for how many rotations from start it has done to calculate which array version to use for the new cells. Number of rotations % 4 = 0 would bring back to the starting position
-
-* Edge Behavior
-   * Don't allow rotations or left or right movements if doing so would require a cell at index % 10 = 0 to go left or a cell at index % 10 = 9 to go right
-   * Don't add/remove any classes and don't change the current reference position 
-
-* Landing 
-   * Stop interval if the piece reaches the bottom of the grid (i.e. if the index of the next cell is between 190 and 199) OR if the index of would-be next cell already has classes “occupied” and “out-of-play”
-   * Clear interval, remove class in play from active piece and add class out of play
-
-* Clearing a Row
-   * If all cells between index % 10 = 0 and index % 10 = 9 of the same row have class “occupied”, clear the row
-   * Remove classes “occupied”, “in-play”, and “out-of-play” from all the cells of that row
-
-* Moving Rows Following a Clear
-   * After a row is cleared, add + width to all the occupied cells with an index lower than the lowest index of that row
-
-* Filling Highest Row (End Game)
-   * If a cell has class out-of-play AND index between 0 and 9, the game is over
-   * Stop interval
-   * Clear grid, removing all occupied classes and in-play or out-of-play
-   * Display game over div and final score
-
 * Start Button
    * Take input from name span
    * Removes Tetris div and name div
@@ -347,7 +321,7 @@ The game has been deployed with GitHub pages and is available [here.](https://kd
 # Challenges
 
 * Clearing rows was definitely a challenge because every time I thought I had it figured out, I would come across a bug later that I hadn't thought of before. At first, I wrote code that would only clear the bottom full row and move all the pieces above that down by one row. As I was testing the game, I realized that  there would be times that more than 1 row was cleared at a time and pieces above needed to be moved down by multiple rows. After I solved that issue, I was testing and realized that it was possible to need to clear non-consecutive rows. In that case, some pieces needed to move down only 1 row while others had to move down multiple. 
-* My solution was to split it into 2 functions: one that checked each row to see if it was full and save those rows into a rowsToClear array. The next function iterated through that array of rows, clearing the rows one by one and moving only the pieces with index numbers higher than the row being cleared. 
+* My solution was to split it into 2 functions: one that checked each row to see if it was full and save those rows into a rowsToClear array. The next function iterates through that array of rows, clearing the rows one by one and moving only the pieces with index numbers higher than the row being cleared. 
 
     <p align="center"> <img src="Plan/README-Images/Clear-Row.png" alt="Clear Row Function" style="width:500px;"/> </p>
 
