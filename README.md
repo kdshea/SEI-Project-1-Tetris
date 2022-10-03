@@ -1,3 +1,6 @@
+Link on GitHub with formatting:
+https://github.com/kdshea/Tetris-Clone/blob/main/README.md
+
 # SEI Project One, Tetris Clone: A Browser-Based JavaScript Game
 
 # Table of contents
@@ -201,7 +204,7 @@ The game has been deployed with GitHub pages and is available [here.](https://kd
 
 * Name Input and High Score Local Storage
    * On page load, get high score info and display in HTML
-   * At the end of the game and when quitting the game, check if current score is greater than the high score. Update high score with name and new score value
+   * At the end of the game and when quitting the game, check if the current score is greater than the high score. Update high score with name and new score value
 
 # Build Process
 
@@ -211,18 +214,19 @@ The game has been deployed with GitHub pages and is available [here.](https://kd
 
 ## Day 2
 
-* I dove into coding, writing out some HTML to make a container for the game board and a createGrid function to generate the game board divs dynamically when the page loads. For each div, I added a data attribute for what row the div is in as well as  a data attrigute of its index number.
+* I dove into coding, writing out some HTML to make a container for the game board and a createGrid function to generate the game board divs dynamically when the page loads. For each div, I added a data attribute for what row the div is in as well as  a data attribute of its index number.
 * I made variables in JavaScript to target all the DOM elements I would need to use in later functions.
 * There are 7 shapes in Tetris represented by the letters I, O, T, S, Z, J, and L. I used a reference point on the game grid called "position" and made an array for each piece that would calculate what index number cells would be occupied by the Tetris piece if it started at the index number of the reference position. I repeated this for each possible orientation the shape could have when it was rotated. 
-* Later in the week, I ended u pcoming back and putting the arrays together into objects where the keys were 1, 2, 3, 4 and their values were the position arrays that rotated 90 degrees each time. The starting orientation is the array of key 1, and the starting posiition is index number 4 (top and center of the board).
-* I wrote out more detailed pseudocode for all the JavaScript function that I would need to code for the game and put them in the order that I should write them in so I could test them as I worked.
+* Later in the week, I ended up coming back and putting the arrays together into objects where the keys were 1, 2, 3, 4 and their values were the position arrays that rotated 90 degrees each time. The starting orientation is the array of key 1, and the starting position is index number 4 (top and center of the board).
+* I wrote out more detailed pseudocode for all the JavaScript functions that I would need to code for the game and put them in the order that I should write them in so I could test them as I worked.
 
 ## Day 3
 
-* I wrote out click events for all the on-screen buttons and keyboard contols.
+* I wrote out click events for all the on-screen buttons and keyboard controls.
 * I worked on JavaScript functions for the rest of the day:
 	* Start button
-	* Random piece
+	* Selecting a random piece
+	* Creating piece
 	* Move piece
 	* Fall interval
 	* Pause button
@@ -256,7 +260,7 @@ The game has been deployed with GitHub pages and is available [here.](https://kd
 
 ## Day 6
 
-* I was happy to have completed an MVP, so I finished styling and spent most of this day orking on stretch goals. I finished up the CSS I had worked on the day before to get a nice looking product. I added a favicon. I also added an info screen with game controls and functions to hide and display it. 
+* I was happy to have completed an MVP, so I finished styling and spent most of this day working on stretch goals. I finished up the CSS I had worked on the day before to get a nice looking product. I added a favicon. I also added an info screen with game controls and functions to hide and display it. 
 *  I edited the HTML to make 3 high score display spots. I wrote a getHighScore function that would get the 3 high scores from local storage to display on the page load. I added to the endGame function so that it would check the final score, and if it was higher than the high scores in storage it would update the local storage. 
 *  I added a function to rotate counter-clockwise. I fixed a bug in the edge behavior for rotations of the right side for the I, L, T and S pieces.
 *  I added to the createGrid function to make a smaller grid to the right of the game board to display the upcoming piece.
@@ -281,7 +285,7 @@ The game has been deployed with GitHub pages and is available [here.](https://kd
 
 # Challenges
 
-* Clearing multiple rows, clearing nonconsecutive rows
+* Clearing multiple rows, clearing non-consecutive rows
 * Displaying upcoming piece
 
 # Key Learnings
@@ -301,5 +305,7 @@ The game has been deployed with GitHub pages and is available [here.](https://kd
 	* Add variables to CSS for colors, fonts, borders etc.
 	* CSS transition animation for pieces falling and hard drop
 	* Ghost piece showing where current piece in play will land
+
+
 
 
