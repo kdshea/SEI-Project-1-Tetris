@@ -1,5 +1,5 @@
 
-# SEI Project One, Tetris Clone: A Browser-Based JavaScript Game
+# Tetris Clone: A Browser-Based JavaScript Game
 
 # Table of contents
 * [Project Overview](#project-overview)
