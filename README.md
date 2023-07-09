@@ -14,6 +14,7 @@
 * [Key Learnings](#key-learnings)
 * [Bugs](#bugs)
 * [Future Improvements](#future-improvements) 
+* [Other Projects](#other-projects) 
 
 # Project Overview
 
@@ -343,4 +344,17 @@ The game has been deployed with GitHub pages and is available [here.](https://kd
 	* CSS transition animation for pieces falling and hard drop
 	* Ghost piece showing where current piece in play will land
 
+# Other Projects
+Take a look at other projects that I have in my own portfolio:
 
+**[Truffle Health Bill Upload](https://github.com/kdshea/Medical-Bill-Upload)**
+
+**[Seeker App](https://github.com/kdshea/Seeker-Full-Stack)** 
+
+**[Exploradex](https//github.com/kdshea/Exploradex-Server)** 
+
+**[Gmail Node Server](https://github.com/kdshea/Gmail-Node-Server)**
+
+**[Coconut Club](https://github.com/kdshea/Coconut-Club-Site)**
+
+**[Speed Pour 2016](https://github.com/kdshea/Speed-Pour-2016)**
